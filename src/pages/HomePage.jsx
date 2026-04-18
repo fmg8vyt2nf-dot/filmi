@@ -61,13 +61,10 @@ export default function HomePage() {
           </p>
 
           <h1
-            className="text-5xl font-black leading-none tracking-tight mb-1 animate-marquee"
+            className="text-6xl font-black leading-none tracking-tight mb-4 animate-marquee"
             style={{ color: '#FFB800' }}
           >
-            BOLLYWOOD
-          </h1>
-          <h1 className="text-5xl font-black leading-none tracking-tight text-white mb-4">
-            GUESSER
+            FILMI
           </h1>
 
           <p className="text-sm text-white/40">

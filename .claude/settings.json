@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"/Users/maheshdalvi/Documents/Filmi\" && git add -A && git diff --cached --quiet || git commit -m \"auto: $(date '+%Y-%m-%d %H:%M:%S')\"",
+            "timeout": 30,
+            "statusMessage": "Auto-committing changes..."
+          }
+        ]
+      }
+    ]
+  }
+}
