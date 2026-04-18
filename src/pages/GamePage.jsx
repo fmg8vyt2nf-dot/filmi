@@ -5,21 +5,21 @@ import { useGame } from '../context/GameContext';
 import { useXP } from '../hooks/useXP';
 import { useGameHistory } from '../hooks/useGameHistory';
 import { useSound } from '../hooks/useSound';
-import { XP_TABLE } from '../utils/constants';
+import { XP_TABLE, HINT_LABELS, HINT_ICONS } from '../utils/constants';
 import HintCard from '../components/game/HintCard';
 import GuessInput from '../components/game/GuessInput';
 import Confetti from '../components/effects/Confetti';
 
-function getHintValue(movie, index) {
+function getHintValue(movie, hintIndex) {
   return [
-    movie.decade,
-    movie.genre,
     movie.director,
     movie.supportingActor,
     movie.leadActor,
     `"${movie.song}"`,
     movie.plot,
-  ][index];
+    movie.composer,
+    `"${movie.dialogue}"`,
+  ][hintIndex];
 }
 
 export default function GamePage() {
@@ -33,7 +33,7 @@ export default function GamePage() {
   const [xpFlash, setXpFlash] = useState(null);
   const savedRef = useRef(false);
 
-  const { movie, status, hintsRevealed, guesses, xpEarned, mode } = state;
+  const { movie, status, hintsRevealed, hintOrder, guesses, xpEarned, mode } = state;
 
   useEffect(() => { if (!movie) navigate('/'); }, [movie, navigate]);
 
@@ -128,8 +128,10 @@ export default function GamePage() {
           {Array.from({ length: 7 }, (_, i) => (
             <HintCard
               key={i}
-              index={i}
-              value={i < hintsRevealed ? getHintValue(movie, i) : ''}
+              displayNum={i + 1}
+              icon={HINT_ICONS[hintOrder[i]]}
+              label={HINT_LABELS[hintOrder[i]]}
+              value={i < hintsRevealed ? getHintValue(movie, hintOrder[i]) : ''}
               locked={i >= hintsRevealed}
             />
           ))}

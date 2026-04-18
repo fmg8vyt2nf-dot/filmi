@@ -12,6 +12,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'Yeh Dosti',
     plot: 'Two criminals are hired by a retired police officer to capture the ruthless bandit Gabbar Singh.',
+    composer: 'R.D. Burman',
+    dialogue: 'Kitne aadmi the?',
   },
   {
     id: 'deewar-1975',
@@ -25,6 +27,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'Keh Doon Tumhe',
     plot: 'Two brothers take opposite paths — one becomes a cop, the other a powerful criminal.',
+    composer: 'R.D. Burman',
+    dialogue: 'Mere paas maa hai.',
   },
   {
     id: 'anand-1971',
@@ -38,6 +42,8 @@ export const movies = [
     leadActor: 'Rajesh',
     song: 'Zindagi Kaisi Hai Paheli',
     plot: 'A terminally ill man lives life to the fullest and spreads joy to everyone around him.',
+    composer: 'Salil Chowdhury',
+    dialogue: 'Zindagi badi honi chahiye, lambi nahi.',
   },
   {
     id: 'pakeezah-1972',
@@ -51,6 +57,8 @@ export const movies = [
     leadActor: 'Meena',
     song: 'Chalte Chalte',
     plot: 'A courtesan longs for love and dignity in a world that will not let her escape her fate.',
+    composer: 'Ghulam Mohammad',
+    dialogue: 'Aapke paon bahut haseen hain, inhe zameen par mat utariyega, maile ho jaayenge.',
   },
   {
     id: 'bobby-1973',
@@ -64,6 +72,8 @@ export const movies = [
     leadActor: 'Rishi',
     song: 'Hum Tum Ek Kamre Mein',
     plot: 'A wealthy boy falls in love with a poor fisherman\'s daughter against their families\' wishes.',
+    composer: 'Laxmikant-Pyarelal',
+    dialogue: 'Bobby, I love you.',
   },
   {
     id: 'zanjeer-1973',
@@ -77,6 +87,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'Yaari Hai Imaan Mera',
     plot: 'An angry police officer seeks justice against the criminals who murdered his parents in childhood.',
+    composer: 'Kalyanji-Anandji',
+    dialogue: 'Yeh police ka haath bahut lamba hota hai.',
   },
   {
     id: 'amar-akbar-anthony-1977',
@@ -90,6 +102,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'My Name Is Anthony Gonsalves',
     plot: 'Three brothers separated at birth are raised by families of different religions before a fate-driven reunion.',
+    composer: 'Laxmikant-Pyarelal',
+    dialogue: 'Main Anthony Gonsalves!',
   },
   {
     id: 'don-1978',
@@ -103,6 +117,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'Khaike Paan Banaraswala',
     plot: 'A lookalike is recruited to impersonate a notorious crime lord to infiltrate his international drug gang.',
+    composer: 'Kalyanji-Anandji',
+    dialogue: 'Don ko pakadna mushkil hi nahi, namumkin hai.',
   },
   {
     id: 'kabhi-kabhi-1976',
@@ -116,6 +132,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'Kabhi Kabhi Mere Dil Mein',
     plot: 'A poetic love story unfolds across two generations when old flames reunite after decades of separation.',
+    composer: 'Khayyam',
+    dialogue: 'Main aur meri tanhaayi, aksar yeh baatein karte hain.',
   },
   {
     id: 'gol-maal-1979',
@@ -129,6 +147,8 @@ export const movies = [
     leadActor: 'Amol',
     song: 'Aane Wala Pal',
     plot: 'A man lies about having a twin brother to keep his job with a conservative boss and must maintain the hilarious deception.',
+    composer: 'R.D. Burman',
+    dialogue: 'Hamare ghar mein do bhai hain — ek seedha, ek tedha!',
   },
   {
     id: 'muqaddar-ka-sikandar-1978',
@@ -142,6 +162,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'O Saathi Re',
     plot: 'An orphan rises to great wealth and power but destiny keeps him from winning the woman he truly loves.',
+    composer: 'Kalyanji-Anandji',
+    dialogue: 'Salaam-e-ishq meri jaan, zara qubool kar lo.',
   },
   {
     id: 'hare-rama-hare-krishna-1971',
@@ -155,6 +177,8 @@ export const movies = [
     leadActor: 'Dev',
     song: 'Dum Maro Dum',
     plot: 'A man travels across India searching for his runaway sister who has joined a hippie commune in Kathmandu.',
+    composer: 'R.D. Burman',
+    dialogue: 'Dum maro dum, mit jaaye gham.',
   },
 
   // ─── 1980s ────────────────────────────────────────────────────────────────
@@ -170,6 +194,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Papa Kehte Hain',
     plot: 'Two young people from rival families fall deeply in love, echoing a doomed Romeo and Juliet tragedy.',
+    composer: 'Anand-Milind',
+    dialogue: 'Pyar dosti hai... aur dosti mein koi shaart nahi hoti.',
   },
   {
     id: 'maine-pyar-kiya-1989',
@@ -183,6 +209,8 @@ export const movies = [
     leadActor: 'Salman',
     song: 'Dil Deewana',
     plot: 'A rich boy and a poor girl fall in love but must prove their sincerity to his disapproving father.',
+    composer: 'Raam Laxman',
+    dialogue: 'Ek ladka aur ek ladki kabhi dost nahi ho sakte.',
   },
   {
     id: 'mr-india-1987',
@@ -196,6 +224,8 @@ export const movies = [
     leadActor: 'Anil',
     song: 'Hawa Hawaii',
     plot: 'A kind-hearted man who cares for orphans discovers a device that makes him invisible and uses it to fight a megalomaniac villain.',
+    composer: 'Laxmikant-Pyarelal',
+    dialogue: 'Mogambo khush hua!',
   },
   {
     id: 'tezaab-1988',
@@ -209,6 +239,8 @@ export const movies = [
     leadActor: 'Anil',
     song: 'Ek Do Teen',
     plot: 'A troubled man falls for a dancer but must confront his violent past to protect her from her greedy father.',
+    composer: 'Laxmikant-Pyarelal',
+    dialogue: 'Woh teesra number mera hai — tera nahi!',
   },
   {
     id: 'chandni-1989',
@@ -222,6 +254,8 @@ export const movies = [
     leadActor: 'Sridevi',
     song: 'Chandni O Meri Chandni',
     plot: 'A woman rebuilds her life after heartbreak and must choose between old love and a new man who adores her.',
+    composer: 'Shiv-Hari',
+    dialogue: 'Mohabbat ek ehsaas hai, ek baar ho jaaye toh zindagi bhar rehta hai.',
   },
   {
     id: 'silsila-1981',
@@ -235,6 +269,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'Rang Barse',
     plot: 'A man trapped in a marriage of duty continues to love another woman, and fate brings all parties together.',
+    composer: 'Shiv-Hari',
+    dialogue: 'Mohabbat aur shaadi do alag alag cheezein hain.',
   },
   {
     id: 'disco-dancer-1982',
@@ -248,6 +284,8 @@ export const movies = [
     leadActor: 'Mithun',
     song: 'I Am A Disco Dancer',
     plot: 'A street musician rises to superstardom but develops a crippling fear of guitars after a tragedy.',
+    composer: 'Bappi Lahiri',
+    dialogue: 'I am a disco dancer!',
   },
   {
     id: 'ram-lakhan-1989',
@@ -261,6 +299,8 @@ export const movies = [
     leadActor: 'Anil',
     song: 'My Name Is Lakhan',
     plot: 'Two brothers with clashing values must unite to avenge their father\'s murder and bring justice to their family.',
+    composer: 'Laxmikant-Pyarelal',
+    dialogue: 'My name is Lakhan!',
   },
   {
     id: 'mard-1985',
@@ -274,6 +314,8 @@ export const movies = [
     leadActor: 'Amitabh',
     song: 'Mard Tangewala',
     plot: 'A fearless freedom fighter\'s son battles colonial oppressors to rescue his kidnapped father and free his people.',
+    composer: 'Anu Malik',
+    dialogue: 'Mard ko dard nahi hota.',
   },
   {
     id: 'masoom-1983',
@@ -287,6 +329,8 @@ export const movies = [
     leadActor: 'Naseeruddin',
     song: 'Lakdi Ki Kathi',
     plot: 'A man must introduce his illegitimate son to his family when the boy\'s mother dies, putting his marriage to the test.',
+    composer: 'R.D. Burman',
+    dialogue: 'Papa, kya main bura hoon?',
   },
   {
     id: 'arth-1982',
@@ -300,6 +344,8 @@ export const movies = [
     leadActor: 'Shabana',
     song: 'Tum Itna Jo Muskura Rahe Ho',
     plot: 'A woman rebuilds her identity and independence after her husband abandons her for a glamorous actress.',
+    composer: 'Jagjit Singh',
+    dialogue: 'Ek aurat ki zindagi uski apni hoti hai, kisi aur ke liye nahi.',
   },
   {
     id: 'karma-1986',
@@ -313,6 +359,8 @@ export const movies = [
     leadActor: 'Dilip',
     song: 'Dil Diya Hai Jaan Bhi Denge',
     plot: 'A patriotic prison warden enlists three convicts on a dangerous mission to defeat a terrorist mastermind.',
+    composer: 'Laxmikant-Pyarelal',
+    dialogue: 'Dil diya hai, jaan bhi denge, aye watan tere liye.',
   },
   {
     id: 'tridev-1989',
@@ -326,6 +374,8 @@ export const movies = [
     leadActor: 'Sunny',
     song: 'Tirchhi Topi Wale',
     plot: 'Three undercover agents with different missions become entangled while infiltrating the same criminal empire.',
+    composer: 'Kalyanji-Anandji',
+    dialogue: 'Teen hain hum, par ek hain hum — Tridev!',
   },
 
   // ─── 1990s ────────────────────────────────────────────────────────────────
@@ -341,6 +391,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Tujhe Dekha To',
     plot: 'A young NRI wins the heart of a traditional Indian girl during a Europe trip and must earn her strict father\'s blessing.',
+    composer: 'Jatin-Lalit',
+    dialogue: 'Ja Simran ja, jee le apni zindagi.',
   },
   {
     id: 'kuch-kuch-hota-hai-1998',
@@ -354,6 +406,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Kuch Kuch Hota Hai',
     plot: 'A widower\'s young daughter sets out to reunite her father with his college best friend, who secretly loved him.',
+    composer: 'Jatin-Lalit',
+    dialogue: 'Kuch kuch hota hai Rahul, tum nahi samjhoge.',
   },
   {
     id: 'jo-jeeta-wohi-sikandar-1992',
@@ -367,6 +421,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Pehla Nasha',
     plot: 'A carefree underachiever must compete in the inter-college cycling race to restore his brother\'s honour.',
+    composer: 'Jatin-Lalit',
+    dialogue: 'Jo jeeta wohi Sikandar!',
   },
   {
     id: 'dil-to-pagal-hai-1997',
@@ -380,6 +436,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Dil To Pagal Hai',
     plot: 'A choreographer who believes in destiny falls for a dancer he once described in a song, while his best friend loves him silently.',
+    composer: 'Uttam Singh',
+    dialogue: 'Kahin na kahin, koi na koi, mere liye bana hai.',
   },
   {
     id: 'hum-saath-saath-hain-1999',
@@ -393,6 +451,8 @@ export const movies = [
     leadActor: 'Salman',
     song: 'Hum Saath Saath Hain',
     plot: 'A scheming stepmother tears apart a loving joint family, but bonds of love and righteousness ultimately prevail.',
+    composer: 'Raam Laxman',
+    dialogue: 'Parivar hi insaan ki asli daulat hoti hai.',
   },
   {
     id: 'darr-1993',
@@ -406,6 +466,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Jaadu Teri Nazar',
     plot: 'A navy officer\'s girlfriend is stalked by a dangerously obsessive man who will stop at nothing to possess her.',
+    composer: 'Shiv-Hari',
+    dialogue: 'K-K-K-Kiran...',
   },
   {
     id: 'karan-arjun-1995',
@@ -419,6 +481,8 @@ export const movies = [
     leadActor: 'Salman',
     song: 'Jaati Hoon Main',
     plot: 'A mother\'s unshakeable faith in God brings her two murdered sons back to life to avenge their killers.',
+    composer: 'Rajesh Roshan',
+    dialogue: 'Mere Karan Arjun aayenge!',
   },
   {
     id: 'rangeela-1995',
@@ -432,6 +496,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Rangeela Re',
     plot: 'A street-smart ticket tout who loves his childhood friend watches her rise to Bollywood stardom and risks losing her.',
+    composer: 'A.R. Rahman',
+    dialogue: 'Mili, tu star ban gayi... lekin mera dil wahi raha.',
   },
   {
     id: 'baazigar-1993',
@@ -445,6 +511,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Baazigar O Baazigar',
     plot: 'A charming young man systematically seduces two women as part of a cold revenge plot against the man who ruined his family.',
+    composer: 'Anu Malik',
+    dialogue: 'Kabhi kabhi kuch jeetne ke liye kuch haarna bhi padta hai.',
   },
   {
     id: 'khalnayak-1993',
@@ -458,6 +526,8 @@ export const movies = [
     leadActor: 'Sanjay',
     song: 'Choli Ke Peeche Kya Hai',
     plot: 'A female cop goes undercover inside a criminal gang by pretending to be a fugitive to capture a notorious terrorist.',
+    composer: 'Laxmikant-Pyarelal',
+    dialogue: 'Main khalnayak hoon!',
   },
   {
     id: 'border-1997',
@@ -471,6 +541,8 @@ export const movies = [
     leadActor: 'Sunny',
     song: 'Sandese Aate Hain',
     plot: 'Indian soldiers defend the Longewala post against an overwhelming Pakistani armoured assault during the 1971 war.',
+    composer: 'Anu Malik',
+    dialogue: 'Maa, main Hindustan ke liye ladne ja raha hoon.',
   },
   {
     id: 'judwaa-1997',
@@ -484,6 +556,8 @@ export const movies = [
     leadActor: 'Salman',
     song: 'Tan Tana Tan',
     plot: 'Twins separated at birth share a mysterious psychic connection that creates comedy chaos when they are finally reunited.',
+    composer: 'Anu Malik',
+    dialogue: 'Hum judwaa hain — ek dil, do jism!',
   },
   {
     id: 'hum-hain-rahi-pyar-ke-1993',
@@ -497,6 +571,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Ghunghat Ki Aad Se',
     plot: 'A young man raising three mischievous nieces and nephews hires a spirited tutor who completely turns his world upside down.',
+    composer: 'R.D. Burman',
+    dialogue: 'Pyar mein koi pagal hona chahta hai!',
   },
   {
     id: 'sadak-1991',
@@ -510,6 +586,8 @@ export const movies = [
     leadActor: 'Sanjay',
     song: 'Tum Se Milke Dil Ka',
     plot: 'A haunted taxi driver falls for a young woman trapped in a brothel controlled by a sadistic and powerful eunuch.',
+    composer: 'Nadeem-Shravan',
+    dialogue: 'Tujhe teri Maa ki kasam, aaj teri shadi hai Maharani!',
   },
   {
     id: 'dil-1990',
@@ -523,6 +601,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'O Priya Priya',
     plot: 'Two college students from rival families fall in love despite their fathers\' fierce and long-standing enmity.',
+    composer: 'Anand-Milind',
+    dialogue: 'Pyar ki raah mein dushman bhi dost ban jaate hain.',
   },
   {
     id: 'dil-se-1998',
@@ -536,6 +616,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Chaiyya Chaiyya',
     plot: 'A radio journalist falls obsessively in love with a mysterious woman at a train station, unaware she is a trained militant.',
+    composer: 'A.R. Rahman',
+    dialogue: 'Pyar mein itna dard hota hai, tab jaake mohabbat mukammal hoti hai.',
   },
   {
     id: 'satya-1998',
@@ -549,6 +631,8 @@ export const movies = [
     leadActor: 'Chakravarthy',
     song: 'Sapne Mein Milti Hai',
     plot: 'A quiet migrant arrives in Mumbai and is inexorably drawn into the brutal and glamorous world of organised crime.',
+    composer: 'Vishal Bhardwaj',
+    dialogue: 'Mumbai ka king kaun? Satya!',
   },
   {
     id: 'gupt-1997',
@@ -562,6 +646,8 @@ export const movies = [
     leadActor: 'Bobby',
     song: 'Gupt Gupt',
     plot: 'A man wrongly convicted of his fiancée\'s murder escapes prison and hunts the real killer before a determined detective catches him.',
+    composer: 'Viju Shah',
+    dialogue: 'Gupt... sab kuch gupt hai.',
   },
   {
     id: 'akele-hum-akele-tum-1995',
@@ -575,6 +661,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Akele Hum Akele Tum',
     plot: 'A struggling singer and his wife separate due to ego and failure, and must fight a bitter custody battle over their young son.',
+    composer: 'Anu Malik',
+    dialogue: 'Baap aur beta dono akele hain... par ek doosre ke liye hain.',
   },
   {
     id: '1942-a-love-story-1994',
@@ -588,6 +676,8 @@ export const movies = [
     leadActor: 'Anil',
     song: 'Ek Ladki Ko Dekha To',
     plot: 'A British officer\'s daughter falls for an Indian freedom fighter during the Quit India Movement of 1942.',
+    composer: 'R.D. Burman',
+    dialogue: 'Ek ladki ko dekha toh aisa laga, jaise khilta gulab.',
   },
 
   // ─── 2000s ────────────────────────────────────────────────────────────────
@@ -603,6 +693,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Aal Izz Well',
     plot: 'Two friends search for their missing college buddy while recalling his radical philosophy that challenged India\'s rote-learning education system.',
+    composer: 'Shantanu Moitra',
+    dialogue: 'Aal izz well!',
   },
   {
     id: 'lagaan-2001',
@@ -616,6 +708,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Ghanan Ghanan',
     plot: 'A defiant Indian villager challenges British officers to a cricket match with the entire village\'s tax burden as the wager.',
+    composer: 'A.R. Rahman',
+    dialogue: 'Agar hum yeh khel jeet gaye, toh lagaan maaf!',
   },
   {
     id: 'kabhi-khushi-kabhie-gham-2001',
@@ -629,6 +723,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Kabhi Khushi Kabhie Gham',
     plot: 'A young man travels to London to reunite his estranged elder brother with their disapproving patriarch father.',
+    composer: 'Jatin-Lalit',
+    dialogue: 'Yeh dil maange more!',
   },
   {
     id: 'munna-bhai-mbbs-2003',
@@ -642,6 +738,8 @@ export const movies = [
     leadActor: 'Sanjay',
     song: 'Meri Jaan',
     plot: 'A gangster pretends to be a medical student to fulfil his father\'s dream and ends up transforming the hospital with love.',
+    composer: 'Anu Malik',
+    dialogue: 'Jaadu ki jhappi!',
   },
   {
     id: 'taare-zameen-par-2007',
@@ -655,6 +753,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Maa',
     plot: 'An art teacher recognises that a struggling eight-year-old is dyslexic and fights to unlock the child\'s extraordinary potential.',
+    composer: 'Shankar-Ehsaan-Loy',
+    dialogue: 'Har baccha khaas hota hai!',
   },
   {
     id: 'chak-de-india-2007',
@@ -668,6 +768,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Chak De India',
     plot: 'A disgraced former hockey player returns as coach of the struggling Indian women\'s team and leads them toward World Cup glory.',
+    composer: 'Salim-Sulaiman',
+    dialogue: 'Sattar minute, sattar minute hain tumhare paas!',
   },
   {
     id: 'rang-de-basanti-2006',
@@ -681,6 +783,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Rang De Basanti',
     plot: 'A British filmmaker\'s documentary about Indian revolutionaries awakens a group of carefree Delhi students to rise against corruption.',
+    composer: 'A.R. Rahman',
+    dialogue: 'Koi bhi desh perfect nahi hota, use perfect banana padta hai.',
   },
   {
     id: 'devdas-2002',
@@ -694,6 +798,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Dola Re Dola',
     plot: 'A weak-willed man torn between his childhood sweetheart and a courtesan spirals into self-destruction and alcoholism.',
+    composer: 'Ismail Darbar',
+    dialogue: 'Paro... O Paro.',
   },
   {
     id: 'kal-ho-naa-ho-2003',
@@ -707,6 +813,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Kal Ho Naa Ho',
     plot: 'A terminally ill man in New York helps a pessimistic young woman find joy and love before time runs out.',
+    composer: 'Shankar-Ehsaan-Loy',
+    dialogue: 'Har pal yahan, jee bhar jiyo.',
   },
   {
     id: 'veer-zaara-2004',
@@ -720,6 +828,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Tere Liye',
     plot: 'An Indian Air Force officer and a Pakistani girl share an eternal love separated by borders and a false imprisonment.',
+    composer: 'Madan Mohan',
+    dialogue: 'Main Veer hun aur woh Zaara hai. Humara pyar sarhad se bada hai.',
   },
   {
     id: 'om-shanti-om-2007',
@@ -733,6 +843,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Dard-E-Disco',
     plot: 'A junior artist is reincarnated as a superstar\'s son and seeks revenge for his past life\'s murdered love across decades.',
+    composer: 'Vishal-Shekhar',
+    dialogue: 'Kehte hain agar kisi cheez ko dil se chaaho, toh poori kayanat tumhe milane mein lag jaati hai.',
   },
   {
     id: 'jodha-akbar-2008',
@@ -746,6 +858,8 @@ export const movies = [
     leadActor: 'Hrithik',
     song: 'Jashn-E-Bahara',
     plot: 'A Mughal emperor and a Rajput princess enter a political marriage and slowly discover an unexpected and profound love.',
+    composer: 'A.R. Rahman',
+    dialogue: 'Main Hindustan ka Badshah hoon, aur yeh meri malika hai.',
   },
   {
     id: 'lage-raho-munna-bhai-2006',
@@ -759,6 +873,8 @@ export const movies = [
     leadActor: 'Sanjay',
     song: 'Pal Pal',
     plot: 'A gangster starts seeing Gandhi\'s ghost and uses Gandhian principles of non-violence to solve people\'s everyday problems.',
+    composer: 'Shantanu Moitra',
+    dialogue: 'Gandhigiri zindabad!',
   },
   {
     id: 'don-2006',
@@ -772,6 +888,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Aaj Ki Raat',
     plot: 'An international crime lord is killed and replaced by his lookalike in a sting operation that spirals out of control.',
+    composer: 'Shankar-Ehsaan-Loy',
+    dialogue: 'Don ka intezaar toh gyarah mulkon ki police karti hai.',
   },
   {
     id: 'rab-ne-bana-di-jodi-2008',
@@ -785,6 +903,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Haule Haule',
     plot: 'A timid government employee disguises himself as a cool dude to win over his new wife, who is unaware of his true identity.',
+    composer: 'Salim-Sulaiman',
+    dialogue: 'Suri mujhse pyar nahi karti... lekin main usse karta hoon.',
   },
   {
     id: 'mohabbatein-2000',
@@ -798,6 +918,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Mohabbatein Lutaaunga',
     plot: 'A rebellious music teacher challenges a strict headmaster\'s rule banning love by inspiring three young couples to follow their hearts.',
+    composer: 'Jatin-Lalit',
+    dialogue: 'Mohabbat... zindagi hai.',
   },
   {
     id: 'swades-2004',
@@ -811,6 +933,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Yeh Jo Des Hai Tera',
     plot: 'A successful NASA scientist returns to India and is moved to bring electricity to a remote rural village.',
+    composer: 'A.R. Rahman',
+    dialogue: 'Yeh jo des hai tera, swades hai tera.',
   },
   {
     id: 'dev-d-2009',
@@ -824,6 +948,8 @@ export const movies = [
     leadActor: 'Abhay',
     song: 'Emotional Atyachaar',
     plot: 'A modern retelling of Devdas where a self-destructive young man wallows in drugs after losing the two women who loved him.',
+    composer: 'Amit Trivedi',
+    dialogue: 'Main bilkul theek nahi hoon.',
   },
   {
     id: 'omkara-2006',
@@ -837,6 +963,8 @@ export const movies = [
     leadActor: 'Ajay',
     song: 'Beedi Jalaile',
     plot: 'Shakespeare\'s Othello transplanted to the badlands of Uttar Pradesh, where jealousy and manipulation lead to deadly tragedy.',
+    composer: 'Vishal Bhardwaj',
+    dialogue: 'Langda... tere dimag mein keeda hai.',
   },
   {
     id: 'fashion-2008',
@@ -850,6 +978,8 @@ export const movies = [
     leadActor: 'Priyanka',
     song: 'Mar Jawaan',
     plot: 'An ambitious small-town girl rises to the top of the modelling world and hits rock bottom before finding her way back.',
+    composer: 'Salim-Sulaiman',
+    dialogue: 'Glamour ki duniya mein sab kuch chamakta hai, par sab sona nahi hota.',
   },
 
   // ─── 2010s ────────────────────────────────────────────────────────────────
@@ -865,6 +995,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Haanikaarak Bapu',
     plot: 'A former wrestler defies society to train his daughters to become world-class champions on the international wrestling stage.',
+    composer: 'Pritam',
+    dialogue: 'Mhari chhoriyaan chhoron se kam hain ke?',
   },
   {
     id: 'pk-2014',
@@ -878,6 +1010,8 @@ export const movies = [
     leadActor: 'Aamir',
     song: 'Nanga Punga Dost',
     plot: 'An alien stranded on Earth questions religious rituals and godmen while trying to find his stolen communication device.',
+    composer: 'Ajay-Atul',
+    dialogue: 'Wrong number!',
   },
   {
     id: 'bajrangi-bhaijaan-2015',
@@ -891,6 +1025,8 @@ export const movies = [
     leadActor: 'Salman',
     song: 'Bhar Do Jholi Meri',
     plot: 'A devoted man undertakes a dangerous mission to reunite a mute Pakistani girl with her family across the closed India-Pakistan border.',
+    composer: 'Pritam',
+    dialogue: 'Main ek Hindu hoon, aur use Pakistan mein uske ghar pohanchaaunga.',
   },
   {
     id: 'zindagi-na-milegi-dobara-2011',
@@ -904,6 +1040,8 @@ export const movies = [
     leadActor: 'Hrithik',
     song: 'Senorita',
     plot: 'Three childhood friends on a road trip across Spain confront their deepest fears and unfinished emotional wounds.',
+    composer: 'Shankar-Ehsaan-Loy',
+    dialogue: 'Jo darr gaya, samjho mar gaya.',
   },
   {
     id: 'queen-2014',
@@ -917,6 +1055,8 @@ export const movies = [
     leadActor: 'Kangana',
     song: 'London Thumakda',
     plot: 'A jilted Delhi girl goes on her honeymoon alone and discovers herself through unexpected friendships across Paris and Amsterdam.',
+    composer: 'Amit Trivedi',
+    dialogue: 'Main khud apni honeymoon pe jaa rahi hoon!',
   },
   {
     id: 'kahaani-2012',
@@ -930,6 +1070,8 @@ export const movies = [
     leadActor: 'Vidya',
     song: 'Ekla Cholo Re',
     plot: 'A pregnant woman arrives in Kolkata to find her missing husband and uncovers a terrifying government conspiracy.',
+    composer: 'Clinton Cerejo',
+    dialogue: 'Amar bhai... woh zinda hai.',
   },
   {
     id: 'barfi-2012',
@@ -943,6 +1085,8 @@ export const movies = [
     leadActor: 'Ranbir',
     song: 'Ala Barfi',
     plot: 'A deaf-mute man and his autistic companion share a beautiful friendship that is the heart of a multi-decade love triangle.',
+    composer: 'Pritam',
+    dialogue: 'Barfi bol nahi sakta tha... phir bhi usne sab kuch keh diya.',
   },
   {
     id: 'bhaag-milkha-bhaag-2013',
@@ -956,6 +1100,8 @@ export const movies = [
     leadActor: 'Farhan',
     song: 'Zinda',
     plot: 'The story of Milkha Singh, who overcame the trauma of Partition to become India\'s greatest sprinter.',
+    composer: 'Shankar-Ehsaan-Loy',
+    dialogue: 'Bhaag Milkha, bhaag!',
   },
   {
     id: 'dabangg-2010',
@@ -969,6 +1115,8 @@ export const movies = [
     leadActor: 'Salman',
     song: 'Munni Badnaam Hui',
     plot: 'A fearless and corrupt police officer with a heart of gold takes on a ruthless local politician terrorising his hometown.',
+    composer: 'Sajid-Wajid',
+    dialogue: 'Hum tum mein itna dard de sakte hain, Robinhood Pandey naam hai hamara.',
   },
   {
     id: 'padmaavat-2018',
@@ -982,6 +1130,8 @@ export const movies = [
     leadActor: 'Ranveer',
     song: 'Ghoomar',
     plot: 'An obsessed sultan lays siege to a Rajput kingdom to possess the legendary beauty of its queen.',
+    composer: 'Sanjay Leela Bhansali',
+    dialogue: 'Rajput rani jauhar karti hai, jhukti nahi.',
   },
   {
     id: 'andhadhun-2018',
@@ -995,6 +1145,8 @@ export const movies = [
     leadActor: 'Ayushmann',
     song: 'Woh Ladki Hai Kahan',
     plot: 'A pianist who fakes blindness accidentally witnesses a murder and must navigate a deadly web of lies to survive.',
+    composer: 'Amit Trivedi',
+    dialogue: 'Main andha hoon... ya nahi hoon? Yahi toh sawaal hai.',
   },
   {
     id: 'raazi-2018',
@@ -1008,6 +1160,8 @@ export const movies = [
     leadActor: 'Alia',
     song: 'Ae Watan',
     plot: 'A young Kashmiri woman is married into a Pakistani military family to spy for India on the eve of the 1971 war.',
+    composer: 'Shankar-Ehsaan-Loy',
+    dialogue: 'Watan ke liye... sab kuch.',
   },
   {
     id: 'bajirao-mastani-2015',
@@ -1021,6 +1175,8 @@ export const movies = [
     leadActor: 'Ranveer',
     song: 'Deewani Mastani',
     plot: 'The Maratha Peshwa falls deeply in love with a half-Muslim warrior princess, tearing his world and his marriage apart.',
+    composer: 'Sanjay Leela Bhansali',
+    dialogue: 'Mastani... meri jaan hai, meri pehchaan hai.',
   },
   {
     id: 'gully-boy-2019',
@@ -1034,6 +1190,8 @@ export const movies = [
     leadActor: 'Ranveer',
     song: 'Apna Time Aayega',
     plot: 'A young man from the Dharavi slums finds his voice through street rap and battles poverty to chase his dreams of stardom.',
+    composer: 'Various artists',
+    dialogue: 'Apna time aayega!',
   },
   {
     id: 'kabir-singh-2019',
@@ -1047,6 +1205,8 @@ export const movies = [
     leadActor: 'Shahid',
     song: 'Bekhayali',
     plot: 'A brilliant but volatile medical student spirals into substance abuse after being separated from the woman he loves.',
+    composer: 'Mithoon',
+    dialogue: 'Main bilkul theek nahi hoon.',
   },
   {
     id: 'uri-2019',
@@ -1060,6 +1220,8 @@ export const movies = [
     leadActor: 'Vicky',
     song: 'Kesari',
     plot: 'The story of India\'s covert surgical strike across the Line of Control in retaliation for the 2016 Uri terror attack.',
+    composer: 'Shashwat Sachdev',
+    dialogue: 'How\'s the josh? High sir!',
   },
   {
     id: 'gangs-of-wasseypur-2012',
@@ -1073,6 +1235,8 @@ export const movies = [
     leadActor: 'Manoj',
     song: 'Keh Ke Lunga',
     plot: 'A decades-long blood feud between coal-mining families in Jharkhand unfolds across three generations of crime and revenge.',
+    composer: 'Sneha Khanwalkar',
+    dialogue: 'Keh ke lunga!',
   },
   {
     id: 'rockstar-2011',
@@ -1086,6 +1250,8 @@ export const movies = [
     leadActor: 'Ranbir',
     song: 'Nadaan Parindey',
     plot: 'A small-town dreamer breaks his heart on purpose to find musical greatness and ends up losing everything he ever loved.',
+    composer: 'A.R. Rahman',
+    dialogue: 'Dard hai toh hi toh music hai.',
   },
   {
     id: 'haider-2014',
@@ -1099,6 +1265,8 @@ export const movies = [
     leadActor: 'Shahid',
     song: 'Bismil',
     plot: 'Shakespeare\'s Hamlet set in 1990s conflict-torn Kashmir, where a young poet returns home to find betrayal and conspiracy.',
+    composer: 'Vishal Bhardwaj',
+    dialogue: 'Hoon... ya nahi hoon?',
   },
   {
     id: 'udta-punjab-2016',
@@ -1112,6 +1280,8 @@ export const movies = [
     leadActor: 'Shahid',
     song: 'Ud Da Punjab',
     plot: 'Four characters\' lives intersect against the backdrop of Punjab\'s devastating drug epidemic.',
+    composer: 'Amit Trivedi',
+    dialogue: 'Punjab da puttar hun main!',
   },
   {
     id: 'my-name-is-khan-2010',
@@ -1125,6 +1295,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Noor-E-Khuda',
     plot: 'A Muslim man with Asperger\'s syndrome sets out across America to tell the President that he is not a terrorist.',
+    composer: 'Shankar-Ehsaan-Loy',
+    dialogue: 'My name is Khan, and I am not a terrorist.',
   },
 
   // ─── 2020s ────────────────────────────────────────────────────────────────
@@ -1140,6 +1312,8 @@ export const movies = [
     leadActor: 'Sidharth',
     song: 'Ranjha',
     plot: 'The life and heroic sacrifice of Captain Vikram Batra, one of India\'s most decorated soldiers of the Kargil War.',
+    composer: 'Javed-Mohsin',
+    dialogue: 'Yeh dil maange more!',
   },
   {
     id: 'pathaan-2023',
@@ -1153,6 +1327,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Besharam Rang',
     plot: 'A rogue spy returns from the shadows to stop a deadly bio-weapon from being unleashed on Indian soil.',
+    composer: 'Vishal-Shekhar',
+    dialogue: 'Pathaan... naam hi kaafi hai.',
   },
   {
     id: 'tanhaji-2020',
@@ -1166,6 +1342,8 @@ export const movies = [
     leadActor: 'Ajay',
     song: 'Shankara Re Shankara',
     plot: 'Maratha general Tanhaji Malusare leads a daring night mission to recapture the strategic Kondana fort from Mughal forces.',
+    composer: 'Ajay-Atul',
+    dialogue: 'Tanhaji Malusare... Kondhana jeetenge!',
   },
   {
     id: 'stree-2-2024',
@@ -1179,6 +1357,8 @@ export const movies = [
     leadActor: 'Rajkummar',
     song: 'Aaj Ki Raat',
     plot: 'The haunted town of Chanderi faces a terrifying new headless spirit that targets only men, and Stree must return to help.',
+    composer: 'Sachin-Jigar',
+    dialogue: 'O stree, kal aana!',
   },
   {
     id: 'jawan-2023',
@@ -1192,6 +1372,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Zinda Banda',
     plot: 'A prison warden with a secret past orchestrates elaborate heists to expose corrupt industrialists and a crooked politician.',
+    composer: 'Anirudh Ravichander',
+    dialogue: 'Ek baar jo humne commitment kar di, toh khud ki bhi nahi sunte.',
   },
   {
     id: 'gangubai-kathiawadi-2022',
@@ -1205,6 +1387,8 @@ export const movies = [
     leadActor: 'Alia',
     song: 'Dholida',
     plot: 'A teenage girl sold into prostitution rises to become a powerful and respected matriarch who fights for sex workers\' rights.',
+    composer: 'Sanjay Leela Bhansali',
+    dialogue: 'Main Gangubai hun, Kathiawad ki shaan!',
   },
   {
     id: 'animal-2023',
@@ -1218,6 +1402,8 @@ export const movies = [
     leadActor: 'Ranbir',
     song: 'Arjan Vailly',
     plot: 'A volatile and violent man with an unhealthy obsession for his absent father will destroy anyone who dares to threaten his family.',
+    composer: 'Harshavardhan Rameshwar',
+    dialogue: 'Papa... main aapke liye kuch bhi kar sakta hoon.',
   },
   {
     id: 'brahmastra-2022',
@@ -1231,6 +1417,8 @@ export const movies = [
     leadActor: 'Ranbir',
     song: 'Kesariya',
     plot: 'A young man discovers he has a mystical connection to fire and must wield a legendary divine weapon to save the world.',
+    composer: 'Pritam',
+    dialogue: 'Shiva... tu andar se aag hai!',
   },
   {
     id: 'dunki-2023',
@@ -1244,6 +1432,8 @@ export const movies = [
     leadActor: 'Shah Rukh',
     song: 'Lutt Putt Gaya',
     plot: 'A loyal soldier helps a group of friends make a dangerous illegal crossing to reach their dream of a better life abroad.',
+    composer: 'Pritam',
+    dialogue: 'Dunki route... illegal, lekin dil se.',
   },
   {
     id: 'the-kashmir-files-2022',
@@ -1257,6 +1447,8 @@ export const movies = [
     leadActor: 'Anupam',
     song: 'Shiv Stuti',
     plot: 'A young man uncovers the brutal truth of his grandfather\'s death and the mass exodus of Kashmiri Pandits in 1990.',
+    composer: 'Rohit Sharma',
+    dialogue: 'Yeh files... yeh Kashmiri Panditon ka dard hai.',
   },
   {
     id: 'sooryavanshi-2021',
@@ -1270,5 +1462,7 @@ export const movies = [
     leadActor: 'Akshay',
     song: 'Aila Re Aillaa',
     plot: 'An anti-terrorism squad chief races to neutralise a sleeper cell planning a catastrophic attack on Mumbai.',
+    composer: 'Tanishk Bagchi',
+    dialogue: 'Aaya Sooryavanshi!',
   },
 ];

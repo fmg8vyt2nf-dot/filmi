@@ -12,10 +12,20 @@ const initialState = {
   status: 'idle',       // 'idle' | 'playing' | 'guessed' | 'given_up'
   movie: null,
   hintsRevealed: 0,
+  hintOrder: [0, 1, 2, 3, 4, 5, 6],
   guesses: [],
   xpEarned: 0,
   dailyKey: null,
 };
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 function pickMovie(mode, difficulty, decadeFilter) {
   let pool = allMovies;
@@ -39,6 +49,7 @@ function reducer(state, action) {
 
     case 'START_GAME': {
       const movie = pickMovie(state.mode, state.difficulty, state.decadeFilter);
+      const hintOrder = shuffle([0, 1, 2, 3, 4, 5, 6]);
       return {
         ...initialState,
         mode: state.mode,
@@ -46,6 +57,7 @@ function reducer(state, action) {
         decadeFilter: state.decadeFilter,
         status: 'playing',
         movie,
+        hintOrder,
         dailyKey: state.mode === 'daily' ? getTodayKey() : null,
       };
     }

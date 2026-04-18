@@ -7,12 +7,16 @@ import { HINT_LABELS, HINT_ICONS, XP_TABLE } from '../utils/constants';
 import XPBar from '../components/ui/XPBar';
 import Confetti from '../components/effects/Confetti';
 
-function getHintValue(movie, index) {
+function getHintValue(movie, hintIndex) {
   return [
-    movie.decade, movie.genre, movie.director,
-    movie.supportingActor, movie.leadActor,
-    `"${movie.song}"`, movie.plot,
-  ][index];
+    movie.director,
+    movie.supportingActor,
+    movie.leadActor,
+    `"${movie.song}"`,
+    movie.plot,
+    movie.composer,
+    `"${movie.dialogue}"`,
+  ][hintIndex];
 }
 
 const container = {
@@ -29,7 +33,7 @@ export default function ResultsPage() {
   const { state, dispatch } = useGame();
   const { totalXP, level, progress } = useXP();
   const { play } = useSound();
-  const { movie, status, hintsRevealed, xpEarned, mode } = state;
+  const { movie, status, hintsRevealed, xpEarned, mode, hintOrder } = state;
 
   if (!movie) { navigate('/'); return null; }
 
@@ -92,18 +96,16 @@ export default function ResultsPage() {
           className="mb-5 p-5 rounded-2xl overflow-hidden relative"
           style={{ background: 'rgba(255,184,0,0.04)', border: '1px solid rgba(255,184,0,0.15)' }}
         >
-          {/* Decorative gradient */}
           <div className="absolute inset-0 opacity-30 pointer-events-none"
             style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,184,0,0.15), transparent 70%)' }} />
 
-          {/* Poster placeholder */}
           <div className="relative w-full h-24 rounded-xl mb-4 flex items-center justify-center overflow-hidden"
             style={{ background: 'linear-gradient(135deg, rgba(255,184,0,0.15) 0%, rgba(255,45,107,0.12) 100%)', border: '1px solid rgba(255,255,255,0.06)' }}>
             <span className="text-4xl">🎬</span>
           </div>
 
           <h3 className="text-xl font-black text-white leading-tight">{movie.title}</h3>
-          <p className="text-sm text-white/35 mt-0.5 mb-4">{movie.year} · {movie.genre}</p>
+          <p className="text-sm text-white/35 mt-0.5 mb-4">{movie.year}</p>
 
           {correct && (
             <div className="flex items-center gap-4 p-3.5 rounded-xl"
@@ -121,31 +123,35 @@ export default function ResultsPage() {
           )}
         </motion.div>
 
-        {/* All clues revealed */}
+        {/* All clues */}
         <motion.div variants={item} className="mb-5">
           <p className="text-xs font-bold text-white/25 uppercase tracking-widest mb-3">All Clues</p>
           <div className="space-y-1.5">
-            {Array.from({ length: 7 }, (_, i) => (
-              <motion.div key={i}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className="flex items-start gap-3 px-3.5 py-2.5 rounded-xl"
-                style={i < hintsRevealed
-                  ? { background: 'rgba(255,184,0,0.05)', border: '1px solid rgba(255,184,0,0.12)', borderLeft: '3px solid rgba(255,184,0,0.5)' }
-                  : { background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', opacity: 0.45 }
-                }>
-                <span className="text-base mt-0.5">{HINT_ICONS[i]}</span>
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs font-bold uppercase tracking-wide mb-0.5"
-                    style={{ color: i < hintsRevealed ? 'rgba(255,184,0,0.7)' : 'rgba(255,255,255,0.2)' }}>
-                    {HINT_LABELS[i]}
-                  </p>
-                  <p className="text-sm text-white/80 leading-snug">{getHintValue(movie, i)}</p>
-                </div>
-                {i >= hintsRevealed && <span className="text-xs text-white/15 shrink-0 mt-0.5">not revealed</span>}
-              </motion.div>
-            ))}
+            {Array.from({ length: 7 }, (_, i) => {
+              const hintIdx = hintOrder[i];
+              const revealed = i < hintsRevealed;
+              return (
+                <motion.div key={i}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex items-start gap-3 px-3.5 py-2.5 rounded-xl"
+                  style={revealed
+                    ? { background: 'rgba(255,184,0,0.05)', border: '1px solid rgba(255,184,0,0.12)', borderLeft: '3px solid rgba(255,184,0,0.5)' }
+                    : { background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.04)', opacity: 0.45 }
+                  }>
+                  <span className="text-base mt-0.5">{HINT_ICONS[hintIdx]}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold uppercase tracking-wide mb-0.5"
+                      style={{ color: revealed ? 'rgba(255,184,0,0.7)' : 'rgba(255,255,255,0.2)' }}>
+                      {HINT_LABELS[hintIdx]}
+                    </p>
+                    <p className="text-sm text-white/80 leading-snug">{getHintValue(movie, hintIdx)}</p>
+                  </div>
+                  {!revealed && <span className="text-xs text-white/15 shrink-0 mt-0.5">not revealed</span>}
+                </motion.div>
+              );
+            })}
           </div>
         </motion.div>
 

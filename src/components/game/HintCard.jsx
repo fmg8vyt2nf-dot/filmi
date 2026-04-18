@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion';
-import { HINT_ICONS, HINT_LABELS } from '../../utils/constants';
 
-export default function HintCard({ index, value, locked = false }) {
-  const num  = String(index + 1).padStart(2, '0');
-  const icon  = HINT_ICONS[index];
-  const label = HINT_LABELS[index];
+export default function HintCard({ displayNum, icon, label, value, locked = false }) {
+  const num = String(displayNum).padStart(2, '0');
 
   if (locked) {
     return (

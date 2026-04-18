@@ -2,16 +2,16 @@
 export const XP_TABLE = [0, 1000, 800, 600, 450, 300, 150, 75];
 
 export const HINT_LABELS = [
-  'Release Decade',
-  'Genre',
   'Director',
   'Supporting Actor',
   'Lead Actor',
   'Famous Song',
   'Plot',
+  'Music Composer',
+  'Famous Dialogue',
 ];
 
-export const HINT_ICONS = ['📅', '🎭', '🎬', '🌟', '⭐', '🎵', '📖'];
+export const HINT_ICONS = ['🎬', '🌟', '⭐', '🎵', '📖', '🎼', '💬'];
 
 export const DIFFICULTIES = [
   { id: 'easy', label: 'Blockbuster', emoji: '🍿', desc: 'All-time classics everyone knows' },
