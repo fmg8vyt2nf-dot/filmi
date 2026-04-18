@@ -19,7 +19,7 @@ export const DIFFICULTIES = [
   { id: 'hard', label: 'Cinephile', emoji: '🏆', desc: 'Cult classics & hidden gems' },
 ];
 
-export const DECADES = ['1970s', '1980s', '1990s', '2000s', '2010s', '2020s'];
+export const DECADES = ['1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s'];
 
 export const LS_KEYS = {
   XP: 'bollywood_xp',
