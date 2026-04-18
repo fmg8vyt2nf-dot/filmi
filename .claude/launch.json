@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "bollywood-guesser",
+      "runtimeExecutable": "/Users/maheshdalvi/local/node/bin/npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5174
+    }
+  ]
+}
