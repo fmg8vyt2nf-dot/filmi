@@ -1,73 +1,75 @@
 import { useEffect, useRef } from 'react';
 
-const PARTICLE_COUNT = 50;
 const COLORS = [
-  { r: 255, g: 107, b: 53, a: 0.3 },
-  { r: 14, g: 165, b: 233, a: 0.25 },
+  { r: 255, g: 184, b: 0,   a: 0.35 }, // gold
+  { r: 255, g: 45,  b: 107, a: 0.28 }, // hot pink
+  { r: 180, g: 100, b: 255, a: 0.20 }, // purple
 ];
 
 function createParticle(w, h) {
-  const color = COLORS[Math.random() > 0.5 ? 0 : 1];
+  const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+  const isBokeh = Math.random() < 0.2;
   return {
-    x: Math.random() * w, y: Math.random() * h,
-    radius: Math.random() * 2 + 1,
-    speedY: -(Math.random() * 0.3 + 0.1),
-    speedX: (Math.random() - 0.5) * 0.2,
-    wobbleSpeed: Math.random() * 0.02 + 0.01,
-    wobbleAmp: Math.random() * 15 + 5,
+    x: Math.random() * w,
+    y: Math.random() * h,
+    radius: isBokeh ? Math.random() * 8 + 6 : Math.random() * 2 + 1,
+    opacity: isBokeh ? Math.random() * 0.06 + 0.02 : color.a,
+    speedY: isBokeh ? -(Math.random() * 0.15 + 0.05) : -(Math.random() * 0.25 + 0.08),
+    speedX: (Math.random() - 0.5) * 0.15,
+    wobble: Math.random() * 0.015 + 0.005,
     phase: Math.random() * Math.PI * 2,
     color,
+    isBokeh,
   };
 }
 
 export default function ParticleBackground() {
   const canvasRef = useRef(null);
-  const animRef = useRef(null);
+  const animRef  = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let w = canvas.width = window.innerWidth;
+    let w = canvas.width  = window.innerWidth;
     let h = canvas.height = window.innerHeight;
-    const particles = Array.from({ length: PARTICLE_COUNT }, () => createParticle(w, h));
+
+    const particles = Array.from({ length: 40 }, () => createParticle(w, h));
     let time = 0;
 
     function animate() {
       time++;
       ctx.clearRect(0, 0, w, h);
+
       particles.forEach(p => {
         p.y += p.speedY;
-        p.x += p.speedX + Math.sin(time * p.wobbleSpeed + p.phase) * 0.3;
-        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
-        if (p.x < -10) p.x = w + 10;
-        if (p.x > w + 10) p.x = -10;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.color.a})`;
-        ctx.fill();
-      });
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(255,255,255,${0.04 * (1 - dist / 120)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
+        p.x += p.speedX + Math.sin(time * p.wobble + p.phase) * 0.25;
+        if (p.y < -20)    { p.y = h + 20; p.x = Math.random() * w; }
+        if (p.x < -20)      p.x = w + 20;
+        if (p.x > w + 20)   p.x = -20;
+
+        if (p.isBokeh) {
+          const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+          g.addColorStop(0,   `rgba(${p.color.r},${p.color.g},${p.color.b},${p.opacity})`);
+          g.addColorStop(1,   `rgba(${p.color.r},${p.color.g},${p.color.b},0)`);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = g;
+          ctx.fill();
+        } else {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.color.r},${p.color.g},${p.color.b},${p.color.a})`;
+          ctx.fill();
         }
-      }
+      });
+
       animRef.current = requestAnimationFrame(animate);
     }
     animate();
 
     function onResize() {
-      w = canvas.width = window.innerWidth;
+      w = canvas.width  = window.innerWidth;
       h = canvas.height = window.innerHeight;
     }
     window.addEventListener('resize', onResize);

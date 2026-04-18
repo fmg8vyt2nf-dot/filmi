@@ -6,35 +6,44 @@ export default function XPBar({ totalXP, level, progress, compact = false }) {
   if (compact) {
     return (
       <div className="flex items-center gap-2">
-        <span className="text-xs font-semibold text-primary-500">Lv.{level}</span>
-        <div className="w-20 h-1.5 rounded-full bg-white/10 overflow-hidden">
+        <span className="text-xs font-bold text-primary-500 tracking-wide">LV{level}</span>
+        <div className="w-16 h-1.5 rounded-full bg-white/10 overflow-hidden">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-primary-500 to-amber-400 transition-all duration-700"
-            style={{ width: `${progress.percentage}%` }}
+            className="h-full rounded-full transition-all duration-700"
+            style={{
+              width: `${progress.percentage}%`,
+              background: 'linear-gradient(90deg, #FFB800, #FF2D6B)',
+            }}
           />
         </div>
-        <span className="text-xs text-white/50">{totalXP.toLocaleString()} XP</span>
+        <span className="text-xs text-white/40">{totalXP.toLocaleString()} XP</span>
       </div>
     );
   }
 
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center mb-1.5">
-        <span className="text-sm font-semibold text-white/80">
-          Level {level} · <span className="text-primary-400">{title}</span>
-        </span>
-        <span className="text-xs text-white/50">{totalXP.toLocaleString()} XP total</span>
+      <div className="flex justify-between items-baseline mb-2">
+        <div className="flex items-baseline gap-2">
+          <span className="text-xs font-bold text-primary-500 tracking-widest uppercase">Level {level}</span>
+          <span className="text-xs text-white/40">·</span>
+          <span className="text-xs text-white/50">{title}</span>
+        </div>
+        <span className="text-xs text-white/30">{totalXP.toLocaleString()} XP</span>
       </div>
-      <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+      <div className="w-full h-2 rounded-full bg-white/8 overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-primary-500 to-amber-400 transition-all duration-700"
-          style={{ width: `${progress.percentage}%` }}
+          className="h-full rounded-full transition-all duration-700"
+          style={{
+            width: `${progress.percentage}%`,
+            background: 'linear-gradient(90deg, #FFB800 0%, #FF8C00 50%, #FF2D6B 100%)',
+            boxShadow: '0 0 10px rgba(255,184,0,0.4)',
+          }}
         />
       </div>
       {progress.needed > 0 && (
-        <p className="text-xs text-white/40 mt-1 text-right">
-          {progress.current} / {progress.needed} to Level {level + 1}
+        <p className="text-xs text-white/25 mt-1.5 text-right">
+          {progress.current.toLocaleString()} / {progress.needed.toLocaleString()} to Level {level + 1}
         </p>
       )}
     </div>

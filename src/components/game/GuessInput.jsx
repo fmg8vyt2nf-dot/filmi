@@ -11,13 +11,12 @@ export default function GuessInput({ onGuess, disabled, wrongGuesses }) {
   const inputRef = useRef(null);
   const suggestions = useAutocomplete(value, movies);
 
-  // shake on new wrong guess
   const wrongCount = wrongGuesses.length;
   const prevWrongRef = useRef(wrongCount);
   useEffect(() => {
     if (wrongCount > prevWrongRef.current) {
       setShake(true);
-      setTimeout(() => setShake(false), 400);
+      setTimeout(() => setShake(false), 420);
     }
     prevWrongRef.current = wrongCount;
   }, [wrongCount]);
@@ -42,45 +41,41 @@ export default function GuessInput({ onGuess, disabled, wrongGuesses }) {
       if (e.key === 'Enter') handleSubmit();
       return;
     }
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setSelectedIdx(i => Math.min(i + 1, suggestions.length - 1));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setSelectedIdx(i => Math.max(i - 1, -1));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (selectedIdx >= 0) handleSelect(suggestions[selectedIdx].title);
-      else handleSubmit();
-    } else if (e.key === 'Escape') {
-      setOpen(false);
-    }
+    if (e.key === 'ArrowDown')  { e.preventDefault(); setSelectedIdx(i => Math.min(i + 1, suggestions.length - 1)); }
+    else if (e.key === 'ArrowUp')   { e.preventDefault(); setSelectedIdx(i => Math.max(i - 1, -1)); }
+    else if (e.key === 'Enter') { e.preventDefault(); selectedIdx >= 0 ? handleSelect(suggestions[selectedIdx].title) : handleSubmit(); }
+    else if (e.key === 'Escape') setOpen(false);
   }
 
   return (
     <div className="relative w-full">
       <form onSubmit={handleSubmit} className={shake ? 'animate-shake' : ''}>
         <div className="flex gap-2">
-          <div className="relative flex-1">
-            <input
-              ref={inputRef}
-              value={value}
-              onChange={e => { setValue(e.target.value); setOpen(true); setSelectedIdx(-1); }}
-              onFocus={() => setOpen(true)}
-              onBlur={() => setTimeout(() => setOpen(false), 150)}
-              onKeyDown={handleKeyDown}
-              disabled={disabled}
-              placeholder="Type a movie title…"
-              autoComplete="off"
-              className="w-full px-4 py-3 rounded-xl bg-white/[0.08] border border-white/15 text-white placeholder-white/30 text-sm focus:outline-none focus:border-primary-500/60 focus:bg-white/[0.10] transition-all disabled:opacity-40"
-            />
-          </div>
+          <input
+            ref={inputRef}
+            value={value}
+            onChange={e => { setValue(e.target.value); setOpen(true); setSelectedIdx(-1); }}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setTimeout(() => setOpen(false), 160)}
+            onKeyDown={handleKeyDown}
+            disabled={disabled}
+            placeholder="Type a movie name…"
+            autoComplete="off"
+            className="flex-1 px-4 py-3 rounded-xl text-sm text-white placeholder-white/25 font-medium focus:outline-none transition-all disabled:opacity-40"
+            style={{
+              background: 'rgba(255,255,255,0.07)',
+              border: '1px solid rgba(255,255,255,0.1)',
+            }}
+            onFocusCapture={e => { e.target.style.borderColor = 'rgba(255,184,0,0.5)'; e.target.style.background = 'rgba(255,184,0,0.05)'; }}
+            onBlurCapture={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)'; e.target.style.background = 'rgba(255,255,255,0.07)'; }}
+          />
           <button
             type="submit"
             disabled={disabled || !value.trim()}
-            className="px-5 py-3 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm font-semibold hover:from-primary-400 hover:to-primary-500 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-lg shadow-primary-500/20"
+            className="px-5 py-3 rounded-xl text-sm font-black tracking-wide text-black disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            style={{ background: 'linear-gradient(135deg, #FFD000, #FFB800)', boxShadow: value.trim() ? '0 4px 16px rgba(255,184,0,0.3)' : 'none' }}
           >
-            Guess
+            GUESS
           </button>
         </div>
       </form>
@@ -88,22 +83,25 @@ export default function GuessInput({ onGuess, disabled, wrongGuesses }) {
       <AnimatePresence>
         {open && suggestions.length > 0 && (
           <motion.ul
-            initial={{ opacity: 0, y: -4 }}
+            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.12 }}
-            className="absolute z-50 w-full mt-1 rounded-xl overflow-hidden border border-white/10 bg-[#1a1a2e]/95 backdrop-blur-xl shadow-2xl"
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.14 }}
+            className="absolute z-50 w-full mt-1.5 rounded-xl overflow-hidden"
+            style={{ background: '#1a1228', border: '1px solid rgba(255,184,0,0.15)', boxShadow: '0 16px 40px rgba(0,0,0,0.6)' }}
           >
             {suggestions.map((m, i) => (
-              <li
-                key={m.id}
+              <li key={m.id}
                 onMouseDown={() => handleSelect(m.title)}
-                className={`px-4 py-2.5 text-sm cursor-pointer flex justify-between items-center transition-colors ${
-                  i === selectedIdx ? 'bg-primary-500/20 text-white' : 'text-white/80 hover:bg-white/[0.06]'
-                }`}
+                className="px-4 py-2.5 text-sm cursor-pointer flex justify-between items-center transition-colors"
+                style={i === selectedIdx
+                  ? { background: 'rgba(255,184,0,0.12)', color: '#FAF0E6' }
+                  : { color: 'rgba(255,255,255,0.65)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = i === selectedIdx ? 'rgba(255,184,0,0.12)' : 'transparent'; }}
               >
-                <span>{m.title}</span>
-                <span className="text-xs text-white/30">{m.year}</span>
+                <span className="font-medium">{m.title}</span>
+                <span className="text-xs text-white/25 ml-2 shrink-0">{m.year}</span>
               </li>
             ))}
           </motion.ul>
