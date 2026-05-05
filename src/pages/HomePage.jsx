@@ -111,7 +111,7 @@ export default function HomePage() {
               boxShadow: '0 8px 32px rgba(255,184,0,0.35), 0 2px 8px rgba(255,184,0,0.2)',
             }}
           >
-            🎮 PRACTICE MODE
+            🎞️ REEL TIME
           </motion.button>
 
           {/* Daily */}
