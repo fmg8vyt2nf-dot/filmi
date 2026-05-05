@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useGame } from '../context/GameContext';
 import { useXP } from '../hooks/useXP';
 import { useGameHistory } from '../hooks/useGameHistory';
+import { useWeeklyChallenge } from '../hooks/useWeeklyChallenge';
 import { useSound } from '../hooks/useSound';
 import XPBar from '../components/ui/XPBar';
 
@@ -20,6 +21,7 @@ export default function HomePage() {
   const { dispatch } = useGame();
   const { totalXP, level, progress } = useXP();
   const { isDailyDone, dailyStreak, history } = useGameHistory();
+  const { isWeeklyDone, weeklyStreak } = useWeeklyChallenge();
   const { play } = useSound();
 
   function startPractice() {
@@ -36,6 +38,11 @@ export default function HomePage() {
     navigate('/play');
   }
 
+  function goWeekly() {
+    play('buttonClick');
+    navigate('/weekly');
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-5 py-12 relative z-10">
       <motion.div
@@ -46,24 +53,17 @@ export default function HomePage() {
       >
         {/* Marquee header */}
         <motion.div variants={item} className="text-center mb-8">
-          {/* Film strip decoration */}
           <div className="flex justify-center gap-1 mb-5 opacity-30">
             {Array.from({ length: 9 }).map((_, i) => (
               <div key={i} className="w-4 h-5 rounded-sm border border-primary-500/60 bg-primary-500/5" />
             ))}
           </div>
 
-          <p
-            className="text-xs font-black tracking-[0.35em] uppercase mb-3"
-            style={{ color: '#FF2D6B' }}
-          >
+          <p className="text-xs font-black tracking-[0.35em] uppercase mb-3" style={{ color: '#FF2D6B' }}>
             Now Showing
           </p>
 
-          <h1
-            className="text-6xl font-black leading-none tracking-tight mb-4 animate-marquee"
-            style={{ color: '#FFB800' }}
-          >
+          <h1 className="text-6xl font-black leading-none tracking-tight mb-4 animate-marquee" style={{ color: '#FFB800' }}>
             FILMI
           </h1>
 
@@ -73,33 +73,34 @@ export default function HomePage() {
         </motion.div>
 
         {/* XP card */}
-        <motion.div
-          variants={item}
-          className="mb-5 p-4 rounded-2xl border"
-          style={{
-            background: 'rgba(255,184,0,0.04)',
-            borderColor: 'rgba(255,184,0,0.15)',
-          }}
-        >
+        <motion.div variants={item} className="mb-5 p-4 rounded-2xl border"
+          style={{ background: 'rgba(255,184,0,0.04)', borderColor: 'rgba(255,184,0,0.15)' }}>
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <span className="text-lg">🎟️</span>
               <span className="text-xs font-bold text-white/50 uppercase tracking-wider">Film Pass</span>
             </div>
-            {dailyStreak > 0 && (
-              <div
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-bold"
-                style={{ color: '#FF2D6B', borderColor: 'rgba(255,45,107,0.35)', background: 'rgba(255,45,107,0.1)' }}
-              >
-                🔥 {dailyStreak} day streak
-              </div>
-            )}
+            <div className="flex items-center gap-2">
+              {weeklyStreak > 0 && (
+                <div className="flex items-center gap-1 px-2 py-0.5 rounded-full border text-xs font-bold"
+                  style={{ color: '#a855f7', borderColor: 'rgba(168,85,247,0.35)', background: 'rgba(168,85,247,0.1)' }}>
+                  🏆 {weeklyStreak}w
+                </div>
+              )}
+              {dailyStreak > 0 && (
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs font-bold"
+                  style={{ color: '#FF2D6B', borderColor: 'rgba(255,45,107,0.35)', background: 'rgba(255,45,107,0.1)' }}>
+                  🔥 {dailyStreak}d
+                </div>
+              )}
+            </div>
           </div>
           <XPBar totalXP={totalXP} level={level} progress={progress} />
         </motion.div>
 
         {/* Buttons */}
         <motion.div variants={item} className="space-y-3 mb-6">
+          {/* Practice */}
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
@@ -113,6 +114,7 @@ export default function HomePage() {
             🎮 PRACTICE MODE
           </motion.button>
 
+          {/* Daily */}
           <motion.button
             whileHover={{ scale: isDailyDone ? 1 : 1.02 }}
             whileTap={{ scale: isDailyDone ? 1 : 0.97 }}
@@ -126,6 +128,20 @@ export default function HomePage() {
           >
             {isDailyDone ? '✅ Daily Complete' : '📅 DAILY CHALLENGE'}
           </motion.button>
+
+          {/* Weekly */}
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={goWeekly}
+            className="w-full py-4 rounded-2xl font-bold text-base tracking-wide border transition-all relative overflow-hidden"
+            style={isWeeklyDone
+              ? { borderColor: 'rgba(168,85,247,0.2)', color: 'rgba(168,85,247,0.45)', background: 'rgba(168,85,247,0.04)', cursor: 'default' }
+              : { borderColor: 'rgba(168,85,247,0.45)', color: '#a855f7', background: 'rgba(168,85,247,0.08)', boxShadow: '0 0 24px rgba(168,85,247,0.12)' }
+            }
+          >
+            {isWeeklyDone ? '✅ Weekly Complete' : '🏆 FILM OF THE WEEK'}
+          </motion.button>
         </motion.div>
 
         {/* Recent games */}
@@ -134,19 +150,20 @@ export default function HomePage() {
             <p className="text-xs text-white/25 uppercase tracking-widest mb-3 font-bold">Recent Films</p>
             <div className="space-y-1.5">
               {history.slice(0, 3).map((h, i) => (
-                <div
-                  key={i}
+                <div key={i}
                   className="flex items-center justify-between px-3.5 py-2.5 rounded-xl"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
-                >
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
                   <div className="flex items-center gap-2.5">
                     <span className="text-sm">{h.correct ? '✅' : '❌'}</span>
                     <div>
                       <p className="text-sm text-white/75 font-medium leading-none">{h.title}</p>
-                      <p className="text-xs text-white/25 mt-0.5">{h.year}</p>
+                      <p className="text-xs text-white/25 mt-0.5">
+                        {h.year}
+                        {h.mode === 'weekly' && <span className="ml-1.5 text-[10px] font-bold" style={{ color: 'rgba(168,85,247,0.6)' }}>WEEKLY</span>}
+                      </p>
                     </div>
                   </div>
-                  <span className="text-sm font-bold" style={{ color: h.correct ? '#FFB800' : 'rgba(255,255,255,0.2)' }}>
+                  <span className="text-sm font-bold" style={{ color: h.correct ? (h.mode === 'weekly' ? '#a855f7' : '#FFB800') : 'rgba(255,255,255,0.2)' }}>
                     {h.correct ? `+${h.xpEarned}` : '—'}
                   </span>
                 </div>

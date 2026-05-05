@@ -24,6 +24,11 @@ export const DECADES = ['1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2
 export const LS_KEYS = {
   XP: 'bollywood_xp',
   DAILY: 'bollywood_daily',
+  WEEKLY: 'filmi_weekly',
   HISTORY: 'bollywood_history',
   SETTINGS: 'bollywood_settings',
 };
+
+// Double XP for the weekly challenge
+export const WEEKLY_XP_TABLE = [0, 2000, 1600, 1200, 900, 600, 300, 150];
+export const WEEKLY_MAX_WRONG = 3;

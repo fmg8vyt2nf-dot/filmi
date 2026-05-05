@@ -123,11 +123,13 @@ export default function ResultsPage() {
           )}
         </motion.div>
 
-        {/* All clues */}
+        {/* Clues used */}
         <motion.div variants={item} className="mb-5">
-          <p className="text-xs font-bold text-white/25 uppercase tracking-widest mb-3">All Clues</p>
+          <p className="text-xs font-bold text-white/25 uppercase tracking-widest mb-3">
+            {correct ? 'Clues You Used' : 'All Clues'}
+          </p>
           <div className="space-y-1.5">
-            {Array.from({ length: 7 }, (_, i) => {
+            {Array.from({ length: correct ? hintsRevealed : 7 }, (_, i) => {
               const hintIdx = hintOrder[i];
               const revealed = i < hintsRevealed;
               return (

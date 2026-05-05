@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 import { movies as allMovies } from '../data/movies';
-import { XP_TABLE } from '../utils/constants';
-import { getDailyMovie, getTodayKey } from '../utils/seededRandom';
+import { XP_TABLE, WEEKLY_XP_TABLE, WEEKLY_MAX_WRONG } from '../utils/constants';
+import { getDailyMovie, getTodayKey, getWeeklyMovie, getWeekKey } from '../utils/seededRandom';
 
 const GameContext = createContext(null);
 
@@ -16,6 +16,8 @@ const initialState = {
   guesses: [],
   xpEarned: 0,
   dailyKey: null,
+  weekKey: null,
+  maxWrongGuesses: null,
 };
 
 function shuffle(arr) {
@@ -28,10 +30,9 @@ function shuffle(arr) {
 }
 
 function pickMovie(mode, difficulty, decadeFilter) {
+  if (mode === 'daily') return getDailyMovie(allMovies, getTodayKey());
+  if (mode === 'weekly') return getWeeklyMovie(allMovies, getWeekKey());
   let pool = allMovies;
-  if (mode === 'daily') {
-    return getDailyMovie(allMovies, getTodayKey());
-  }
   if (difficulty) pool = pool.filter(m => m.difficulty === difficulty);
   if (decadeFilter) pool = pool.filter(m => m.decade === decadeFilter);
   if (pool.length === 0) pool = allMovies;
@@ -50,6 +51,7 @@ function reducer(state, action) {
     case 'START_GAME': {
       const movie = pickMovie(state.mode, state.difficulty, state.decadeFilter);
       const hintOrder = shuffle([0, 1, 2, 3, 4, 5, 6]);
+      const isWeekly = state.mode === 'weekly';
       return {
         ...initialState,
         mode: state.mode,
@@ -59,6 +61,8 @@ function reducer(state, action) {
         movie,
         hintOrder,
         dailyKey: state.mode === 'daily' ? getTodayKey() : null,
+        weekKey: isWeekly ? getWeekKey() : null,
+        maxWrongGuesses: isWeekly ? WEEKLY_MAX_WRONG : null,
       };
     }
 
@@ -69,11 +73,18 @@ function reducer(state, action) {
     case 'SUBMIT_GUESS': {
       const guess = action.guess;
       const correct = normalize(guess) === normalize(state.movie.title);
+      const newGuesses = [...state.guesses, { value: guess, correct }];
       if (correct) {
-        const xpEarned = XP_TABLE[state.hintsRevealed] ?? 0;
-        return { ...state, status: 'guessed', xpEarned, guesses: [...state.guesses, { value: guess, correct: true }] };
+        const table = state.mode === 'weekly' ? WEEKLY_XP_TABLE : XP_TABLE;
+        const xpEarned = table[state.hintsRevealed] ?? 0;
+        return { ...state, status: 'guessed', xpEarned, guesses: newGuesses };
       }
-      return { ...state, guesses: [...state.guesses, { value: guess, correct: false }] };
+      // Auto give-up when max wrong guesses reached (weekly mode)
+      const wrongCount = newGuesses.filter(g => !g.correct).length;
+      if (state.maxWrongGuesses && wrongCount >= state.maxWrongGuesses) {
+        return { ...state, status: 'given_up', xpEarned: 0, guesses: newGuesses };
+      }
+      return { ...state, guesses: newGuesses };
     }
 
     case 'GIVE_UP':

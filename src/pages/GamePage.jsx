@@ -4,8 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useGame } from '../context/GameContext';
 import { useXP } from '../hooks/useXP';
 import { useGameHistory } from '../hooks/useGameHistory';
+import { useWeeklyChallenge } from '../hooks/useWeeklyChallenge';
 import { useSound } from '../hooks/useSound';
-import { XP_TABLE, HINT_LABELS, HINT_ICONS } from '../utils/constants';
+import { XP_TABLE, WEEKLY_XP_TABLE, HINT_LABELS, HINT_ICONS } from '../utils/constants';
 import HintCard from '../components/game/HintCard';
 import GuessInput from '../components/game/GuessInput';
 import Confetti from '../components/effects/Confetti';
@@ -27,13 +28,14 @@ export default function GamePage() {
   const { state, dispatch } = useGame();
   const { addXP } = useXP();
   const { saveGame } = useGameHistory();
+  const { saveWeekly } = useWeeklyChallenge();
   const { play } = useSound();
   const [showConfetti, setShowConfetti] = useState(false);
   const [showGiveUpModal, setShowGiveUpModal] = useState(false);
   const [xpFlash, setXpFlash] = useState(null);
   const savedRef = useRef(false);
 
-  const { movie, status, hintsRevealed, hintOrder, guesses, xpEarned, mode } = state;
+  const { movie, status, hintsRevealed, hintOrder, guesses, xpEarned, mode, maxWrongGuesses } = state;
 
   useEffect(() => { if (!movie) navigate('/'); }, [movie, navigate]);
 
@@ -50,15 +52,21 @@ export default function GamePage() {
         play('giveUp');
       }
       saveGame({ movie, xpEarned, hintsUsed: hintsRevealed, mode });
+      if (mode === 'weekly') {
+        saveWeekly({ movie, xpEarned, hintsUsed: hintsRevealed });
+      }
       setTimeout(() => navigate('/results'), status === 'guessed' ? 2200 : 900);
     }
   }, [status]);
 
   if (!movie) return null;
 
-  const maxXP  = XP_TABLE[hintsRevealed] ?? 0;
+  const isWeekly = mode === 'weekly';
+  const xpTable = isWeekly ? WEEKLY_XP_TABLE : XP_TABLE;
+  const maxXP = xpTable[hintsRevealed] ?? 0;
   const isDone = status === 'guessed' || status === 'given_up';
   const wrongGuesses = guesses.filter(g => !g.correct);
+  const attemptsLeft = maxWrongGuesses ? maxWrongGuesses - wrongGuesses.length : null;
 
   function revealHint() {
     if (hintsRevealed >= 7 || isDone) return;
@@ -92,29 +100,51 @@ export default function GamePage() {
               DAILY
             </span>
           )}
-          <span className="text-xs text-white/30 font-medium">
-            {hintsRevealed}/7 clues
-          </span>
+          {isWeekly && (
+            <span className="px-2 py-0.5 rounded-full text-xs font-black tracking-wide"
+              style={{ background: 'rgba(168,85,247,0.15)', color: '#a855f7', border: '1px solid rgba(168,85,247,0.35)' }}>
+              🏆 WEEKLY
+            </span>
+          )}
+          {isWeekly && attemptsLeft !== null && !isDone && (
+            <span className="text-xs font-bold"
+              style={{ color: attemptsLeft <= 1 ? '#ef4444' : 'rgba(255,255,255,0.3)' }}>
+              {attemptsLeft} attempt{attemptsLeft !== 1 ? 's' : ''} left
+            </span>
+          )}
+          {!isWeekly && (
+            <span className="text-xs text-white/30 font-medium">
+              {hintsRevealed}/7 clues
+            </span>
+          )}
+          {isWeekly && isDone && (
+            <span className="text-xs text-white/30 font-medium">
+              {hintsRevealed}/7 clues
+            </span>
+          )}
         </div>
       </div>
 
       <div className="w-full max-w-sm">
         {/* XP potential */}
         <div className="flex items-center justify-between mb-4 px-1">
-          <p className="text-xs text-white/30 font-medium">
-            {hintsRevealed === 0 ? 'Reveal a clue to begin' : 'Guess now for:'}
+          <p className="text-xs font-medium" style={{ color: isWeekly ? 'rgba(168,85,247,0.6)' : 'rgba(255,255,255,0.3)' }}>
+            {hintsRevealed === 0
+              ? (isWeekly ? '🏆 Weekly bonus XP active' : 'Reveal a clue to begin')
+              : 'Guess now for:'}
           </p>
           <AnimatePresence mode="wait">
             {xpFlash ? (
               <motion.span key="flash"
                 initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, y: -10 }}
-                className="font-black text-xl animate-marquee" style={{ color: '#FFB800' }}>
+                className="font-black text-xl" style={{ color: isWeekly ? '#a855f7' : '#FFB800' }}>
                 {xpFlash}
               </motion.span>
             ) : (
               <motion.div key="preview" initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                 className="flex items-baseline gap-1">
-                <span className="font-black text-xl" style={{ color: hintsRevealed === 0 ? 'rgba(255,255,255,0.12)' : '#FFB800' }}>
+                <span className="font-black text-xl"
+                  style={{ color: hintsRevealed === 0 ? 'rgba(255,255,255,0.12)' : (isWeekly ? '#a855f7' : '#FFB800') }}>
                   {hintsRevealed === 0 ? '—' : maxXP.toLocaleString()}
                 </span>
                 {hintsRevealed > 0 && <span className="text-xs text-white/30 font-medium">XP</span>}
@@ -133,6 +163,7 @@ export default function GamePage() {
               label={HINT_LABELS[hintOrder[i]]}
               value={i < hintsRevealed ? getHintValue(movie, hintOrder[i]) : ''}
               locked={i >= hintsRevealed}
+              weekly={isWeekly}
             />
           ))}
         </div>
@@ -144,12 +175,10 @@ export default function GamePage() {
             whileTap={{ scale: 0.97 }}
             onClick={revealHint}
             className="w-full py-3.5 mb-4 rounded-2xl font-black text-sm tracking-wide border transition-all"
-            style={{
-              borderColor: 'rgba(255,184,0,0.35)',
-              color: '#FFB800',
-              background: 'rgba(255,184,0,0.07)',
-              boxShadow: '0 0 20px rgba(255,184,0,0.08)',
-            }}
+            style={isWeekly
+              ? { borderColor: 'rgba(168,85,247,0.4)', color: '#a855f7', background: 'rgba(168,85,247,0.07)', boxShadow: '0 0 20px rgba(168,85,247,0.08)' }
+              : { borderColor: 'rgba(255,184,0,0.35)', color: '#FFB800', background: 'rgba(255,184,0,0.07)', boxShadow: '0 0 20px rgba(255,184,0,0.08)' }
+            }
           >
             👁 REVEAL CLUE {hintsRevealed + 1} OF 7
           </motion.button>
@@ -187,8 +216,8 @@ export default function GamePage() {
           </p>
         )}
 
-        {/* Give up */}
-        {!isDone && (
+        {/* Give up — hidden for weekly when out of attempts (auto give-up handled in reducer) */}
+        {!isDone && (!isWeekly || attemptsLeft > 0) && (
           <button onClick={() => setShowGiveUpModal(true)}
             className="w-full py-2 text-xs text-white/20 hover:text-white/40 transition-colors font-medium tracking-wide">
             Give Up
@@ -201,7 +230,7 @@ export default function GamePage() {
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
               className="mt-5 p-5 rounded-2xl text-center"
               style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)' }}>
-              <p className="text-correct font-black text-xl">🎉 Correct!</p>
+              <p className="font-black text-xl" style={{ color: '#22c55e' }}>🎉 Correct!</p>
               <p className="text-white/50 text-sm mt-1 font-medium">
                 +{xpEarned} XP · {hintsRevealed} clue{hintsRevealed !== 1 ? 's' : ''} used
               </p>
@@ -211,6 +240,9 @@ export default function GamePage() {
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
               className="mt-5 p-5 rounded-2xl text-center"
               style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              {isWeekly && wrongGuesses.length >= (maxWrongGuesses ?? 0) && (
+                <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: '#ef4444' }}>Out of attempts</p>
+              )}
               <p className="text-white/50 text-sm font-medium">The movie was</p>
               <p className="font-black text-xl mt-1" style={{ color: '#FFB800' }}>
                 {movie.title} <span className="text-white/40 font-normal text-base">({movie.year})</span>
@@ -230,7 +262,11 @@ export default function GamePage() {
               className="w-full max-w-xs p-6 rounded-2xl"
               style={{ background: '#161020', border: '1px solid rgba(255,255,255,0.1)' }}>
               <h3 className="text-lg font-black text-white mb-1.5">Give up?</h3>
-              <p className="text-sm text-white/40 mb-6">The answer will be revealed. You'll earn 0 XP.</p>
+              <p className="text-sm text-white/40 mb-6">
+                {isWeekly
+                  ? "You'll lose your weekly challenge attempt. The answer will be revealed."
+                  : "The answer will be revealed. You'll earn 0 XP."}
+              </p>
               <div className="flex gap-3">
                 <button onClick={() => setShowGiveUpModal(false)}
                   className="flex-1 py-2.5 rounded-xl border text-sm font-bold text-white/50 hover:bg-white/[0.04] transition-all"

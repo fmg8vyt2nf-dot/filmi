@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import SetupPage from './pages/SetupPage';
 import GamePage from './pages/GamePage';
 import ResultsPage from './pages/ResultsPage';
+import WeeklyChallengePage from './pages/WeeklyChallengePage';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="/setup" element={<SetupPage />} />
           <Route path="/play" element={<GamePage />} />
           <Route path="/results" element={<ResultsPage />} />
+          <Route path="/weekly" element={<WeeklyChallengePage />} />
         </Routes>
       </HashRouter>
     </GameProvider>

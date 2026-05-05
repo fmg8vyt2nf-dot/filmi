@@ -22,3 +22,28 @@ export function getDailyMovie(movies, dateKey) {
   const idx = Math.floor(rng() * movies.length);
   return movies[idx];
 }
+
+export function getWeekKey() {
+  const d = new Date();
+  const startOfYear = new Date(d.getFullYear(), 0, 1);
+  const weekNum = Math.ceil(((d - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+  return `${d.getFullYear()}-W${String(weekNum).padStart(2, '0')}`;
+}
+
+export function getWeeklyMovie(movies, weekKey) {
+  // Bias toward hard films for the weekly challenge
+  const hardPool = movies.filter(m => m.difficulty === 'hard');
+  const pool = hardPool.length >= 15 ? hardPool : movies;
+  const rng = seededRandom(weekKey);
+  const idx = Math.floor(rng() * pool.length);
+  return pool[idx];
+}
+
+export function getTimeUntilNextWeek() {
+  const now = new Date();
+  const nextMonday = new Date(now);
+  const daysUntilMonday = (8 - now.getDay()) % 7 || 7;
+  nextMonday.setDate(now.getDate() + daysUntilMonday);
+  nextMonday.setHours(0, 0, 0, 0);
+  return nextMonday - now;
+}
