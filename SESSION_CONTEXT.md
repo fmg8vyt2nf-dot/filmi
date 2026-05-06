@@ -1,69 +1,75 @@
 # Filmi — Session Context
-_Last updated: 2026-05-05_
+_Last updated: 2026-05-06_
 
 ## Current State
-The app is **fully built, deployed, and live** with 4 game modes and 175 movies.
+The app is **fully built, tested, and live** with 175 movies, 5 game modes, and a rich feature set.
 
 **Live URL:** https://fmg8vyt2nf-dot.github.io/filmi/
+**Repo:** https://github.com/fmg8vyt2nf-dot/filmi
+
+## Features Built (complete)
+
+### Game Modes
+| Mode | Description | XP | Special Rules |
+|------|------------|-----|---------------|
+| 🎞️ Reel Time | Practice — pick difficulty + era | Normal | Unlimited replays |
+| 📅 Daily Challenge | Seeded by date, once/day | Normal | Resets midnight |
+| 🏆 Film of the Week | Seeded by ISO week, once/week | 2× (up to 2500) | Max 3 wrong guesses |
+
+### Gameplay
+- **7 hints per movie**, shuffled randomly each game (Director, Supporting Actor, Lead Actor, Famous Song, Plot, Music Composer, Famous Dialogue)
+- **⚡ "I Know This!" blind guess** — pulsing button before any clue; 2500 XP if correct, play continues normally if wrong
+- **Results page** — shows only clues used on correct guess; special ⚡ banner for blind wins; 🆕 new discovery badge for first-time directors/actors
+
+### Progression & Collection
+- **XP & Levels** — 10 levels, XP bar on home screen
+- **📚 Film Encyclopedia** (`/collector`) — tracks every director + actor guessed correctly; Directors/Actors tabs sorted by count; Era Tour progress bars
+- **🗺️ Decade Tour** — SetupPage era cards with animated progress bars (X/25 per decade, ✅ on completion)
+- **Daily streak** — tracked with 🔥 badge on home screen
+- **Weekly streak** — tracked with 🏆 badge on home screen
+
+## Movie Database
+- **175 movies** — exactly 25 per decade × 7 decades (1960s–2020s)
+- All 7 hint fields per movie: director, supportingActor, leadActor, song, plot, composer, dialogue
+- Difficulty spread: easy 45, medium 83, hard 47
 
 ## Files Modified (this session)
 
 | File | Change |
 |------|--------|
-| `src/utils/seededRandom.js` | Added `getWeekKey()`, `getWeeklyMovie()`, `getTimeUntilNextWeek()` |
-| `src/utils/constants.js` | Added `LS_KEYS.WEEKLY`, `WEEKLY_XP_TABLE` (2x), `WEEKLY_MAX_WRONG = 3` |
-| `src/context/GameContext.jsx` | Added `weekly` mode to `pickMovie`, `maxWrongGuesses` state, auto give-up on 3 wrong, weekly XP table |
-| `src/hooks/useWeeklyChallenge.js` | **New** — weekly state, streak, `saveWeekly()`, localStorage under `filmi_weekly` |
-| `src/pages/WeeklyChallengePage.jsx` | **New** — lobby page: rules, mystery card, XP scale, countdown, post-play result |
-| `src/pages/GamePage.jsx` | Weekly badge, attempts-left counter, purple accent, `saveWeekly()` on game end |
-| `src/pages/HomePage.jsx` | Purple `🏆 FILM OF THE WEEK` button, weekly streak badge, weekly tag in Recent Films |
-| `src/App.jsx` | Added `/weekly` route → `WeeklyChallengePage` |
-
-## App Architecture
-
-### Game Modes (4 total)
-1. **Practice** — filtered by difficulty + decade, unlimited replays
-2. **Daily** — seeded by date (`YYYY-MM-DD`), once per day, pink theme
-3. **Weekly** — seeded by ISO week (`YYYY-WXX`), once per week, purple theme, hard-film pool
-4. _(Daily via GameContext START_GAME)_
-
-### Weekly Challenge specifics
-- **Movie pool:** hard-difficulty films (falls back to all 175 if pool < 15)
-- **XP:** `[0, 2000, 1600, 1200, 900, 600, 300, 150]` — double normal
-- **Limit:** 3 wrong guesses max → auto give-up in reducer
-- **Reset:** Every Monday midnight
-- **Storage:** `filmi_weekly` in localStorage, keyed by week string
-
-### Hint System
-- 7 hints per movie, shuffled in random order every game (`hintOrder` in GameContext)
-- Labels: Director 🎬, Supporting Actor 🌟, Lead Actor ⭐, Famous Song 🎵, Plot 📖, Music Composer 🎼, Famous Dialogue 💬
-- Results page: shows only used clues on correct guess; all 7 on give-up
-
-### Movie Database
-- **175 movies** — 25 per decade × 7 decades (1960s–2020s)
-- Every movie has: `id, title, year, decade, difficulty, director, supportingActor, leadActor, song, plot, composer, dialogue`
+| `src/utils/constants.js` | Added BLIND_XP=2500, ERA_EMOJIS, LS_KEYS.COLLECTOR/DECADE_TOUR |
+| `src/context/GameContext.jsx` | Added BLIND_GUESS action, blindFailed state, weekly mode |
+| `src/hooks/useCollector.js` | **New** — tracks directors/actors per correct guess |
+| `src/hooks/useDecadeTour.js` | **New** — tracks guessed films per decade, progress |
+| `src/hooks/useWeeklyChallenge.js` | **New** — weekly state, streak, saveWeekly() |
+| `src/pages/GamePage.jsx` | ⚡ blind guess button, weekly badge, attempts counter |
+| `src/pages/SetupPage.jsx` | Decade Tour cards with animated progress bars |
+| `src/pages/ResultsPage.jsx` | Blind win display, 🆕 new discoveries banner |
+| `src/pages/CollectorPage.jsx` | **New** — Film Encyclopedia page |
+| `src/pages/WeeklyChallengePage.jsx` | **New** — weekly lobby with rules, countdown |
+| `src/pages/HomePage.jsx` | Reel Time rename, weekly button, encyclopedia link |
+| `src/App.jsx` | Routes: /weekly, /collector |
+| `src/data/movies.js` | Fixed: added 11 missing films (1990s +4, 2000s +3, 2020s +4) |
+| `src/utils/seededRandom.js` | Added getWeekKey, getWeeklyMovie, getTimeUntilNextWeek |
 
 ## Key Decisions
-- **Purple as weekly accent** (`#a855f7`) — distinct from gold (practice) and pink (daily)
-- **Hard-film pool for weekly** — makes it feel prestigious/challenging
-- **Auto give-up in reducer** (not UI) on 3rd wrong guess — cleaner than handling in component
-- **Lobby page before weekly starts** — builds anticipation, explains stakes
-- **Weekly button always navigates to `/weekly`** — even when done, to see result + countdown
+- **BLIND_XP = 2500** — higher than both normal (1000) and weekly (2000) first-clue XP, making it always worth attempting
+- **Blind guess in reducer** (`BLIND_GUESS` action) — keeps all game logic in one place; sets `blindFailed: true` on miss so button disappears and normal play resumes
+- **Collector records on correct guess only** — tracks director + leadActor + supportingActor; ResultsPage detects new discoveries by checking `count === 1` after GamePage has already saved
+- **Decade Tour uses animated bars** — `motion.div` width animation on mount for satisfying progress reveal
+- **Testing before committing** — smoke test suite (23 checks) caught 11 missing movies; all now pass
 
-## Feature Ideas Discussed (backlog)
-1. **Share result card** 🥇 — Wordle-style emoji grid (biggest growth lever)
-2. **Daily streak milestones** — Visual rewards at 3🔥, 7🌟, 30👑
-3. **"I Know This!" blind guess** — Attempt before any clue for mega XP bonus
-4. **Clue reactions** — Witty one-liner on results based on clues used
-5. **Hint efficiency rating** — Letter grade (S/A/B/C)
-6. **Hot streak bonus** — XP multiplier after 3 correct in a row
-7. **Director/Actor collector** — Track every person encountered
-8. **Challenge a Friend** — Shareable link locking both to same movie
-9. **Decade Tour progress** — Per-decade completion bar
-10. ✅ ~~Film of the Week~~ — **Done this session**
+## Remaining Feature Ideas (backlog)
+1. **Share result card** 🥇 — Wordle-style emoji grid, biggest viral growth lever
+2. **Daily streak milestones** — Visual rewards at 3🔥, 7🌟, 30👑 day streaks
+3. **Clue reactions** — Witty one-liner on results based on clues used
+4. **Hint efficiency rating** — Letter grade S/A/B/C based on clues used
+5. **Hot streak bonus** — XP multiplier after 3 correct games in a row
+6. **Challenge a Friend** — Shareable link locking two players to same movie
 
 ## How to Resume
 1. `cd "/Users/maheshdalvi/Documents/Filmi"`
-2. `npm run dev` → http://localhost:5174
-3. Deploy: `npm run build && npx gh-pages -d dist`
-4. Tell Claude: _"Let's build the share result card feature"_ (or whichever backlog item)
+2. `npm run dev` → http://localhost:5174/filmi/
+3. To deploy: `npm run build && npx gh-pages -d dist`
+4. To run tests: `node --input-type=module < test-smoke.js` (or paste test block from this session)
+5. Tell Claude which backlog item to build next

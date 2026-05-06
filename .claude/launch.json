@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "bollywood-guesser",
-      "runtimeExecutable": "/Users/maheshdalvi/local/node/bin/npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 5174
+      "runtimeExecutable": "/Users/maheshdalvi/Documents/Filmi/node_modules/.bin/vite",
+      "runtimeArgs": ["--config", "/Users/maheshdalvi/Documents/Filmi/vite.config.js", "/Users/maheshdalvi/Documents/Filmi"],
+      "port": 5174,
+      "autoPort": true
     }
   ]
 }

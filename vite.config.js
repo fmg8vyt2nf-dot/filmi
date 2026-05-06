@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   base: '/filmi/',
   server: {
-    port: 5174,
     host: true,
   },
 });
