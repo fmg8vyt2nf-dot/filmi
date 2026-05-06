@@ -38,7 +38,7 @@ export default function GamePage() {
   const [showConfetti, setShowConfetti] = useState(false);
   const [showGiveUpModal, setShowGiveUpModal] = useState(false);
   const [xpFlash, setXpFlash] = useState(null);
-  const [showBlindInput, setShowBlindInput] = useState(false);
+  const [blindStage, setBlindStage] = useState('idle'); // 'idle' | 'dialogue' | 'input'
   const savedRef = useRef(false);
 
   const { movie, status, hintsRevealed, hintOrder, guesses, xpEarned, mode, maxWrongGuesses, blindFailed } = state;
