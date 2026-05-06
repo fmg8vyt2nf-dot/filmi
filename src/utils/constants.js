@@ -27,8 +27,23 @@ export const LS_KEYS = {
   WEEKLY: 'filmi_weekly',
   HISTORY: 'bollywood_history',
   SETTINGS: 'bollywood_settings',
+  COLLECTOR: 'filmi_collector',
+  DECADE_TOUR: 'filmi_decade_tour',
 };
 
 // Double XP for the weekly challenge
 export const WEEKLY_XP_TABLE = [0, 2000, 1600, 1200, 900, 600, 300, 150];
 export const WEEKLY_MAX_WRONG = 3;
+
+// Mega XP for a blind guess (no clues revealed)
+export const BLIND_XP = 2500;
+
+export const ERA_EMOJIS = {
+  '1960s': '🕰️',
+  '1970s': '🪅',
+  '1980s': '📼',
+  '1990s': '💿',
+  '2000s': '📱',
+  '2010s': '🎧',
+  '2020s': '🚀',
+};

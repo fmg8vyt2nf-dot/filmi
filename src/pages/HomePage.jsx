@@ -172,8 +172,16 @@ export default function HomePage() {
           </motion.div>
         )}
 
+        {/* Encyclopedia link */}
+        <motion.div variants={item} className="mt-6 text-center">
+          <button onClick={() => { play('buttonClick'); navigate('/collector'); }}
+            className="text-xs text-white/20 hover:text-white/45 transition-colors font-medium tracking-wide">
+            📚 Film Encyclopedia
+          </button>
+        </motion.div>
+
         {/* Film strip bottom */}
-        <motion.div variants={item} className="flex justify-center gap-1 mt-8 opacity-15">
+        <motion.div variants={item} className="flex justify-center gap-1 mt-6 opacity-15">
           {Array.from({ length: 9 }).map((_, i) => (
             <div key={i} className="w-4 h-5 rounded-sm border border-primary-500/60 bg-primary-500/5" />
           ))}

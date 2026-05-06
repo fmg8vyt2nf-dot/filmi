@@ -5,8 +5,10 @@ import { useGame } from '../context/GameContext';
 import { useXP } from '../hooks/useXP';
 import { useGameHistory } from '../hooks/useGameHistory';
 import { useWeeklyChallenge } from '../hooks/useWeeklyChallenge';
+import { useCollector } from '../hooks/useCollector';
+import { useDecadeTour } from '../hooks/useDecadeTour';
 import { useSound } from '../hooks/useSound';
-import { XP_TABLE, WEEKLY_XP_TABLE, HINT_LABELS, HINT_ICONS } from '../utils/constants';
+import { XP_TABLE, WEEKLY_XP_TABLE, BLIND_XP, HINT_LABELS, HINT_ICONS } from '../utils/constants';
 import HintCard from '../components/game/HintCard';
 import GuessInput from '../components/game/GuessInput';
 import Confetti from '../components/effects/Confetti';
@@ -29,13 +31,17 @@ export default function GamePage() {
   const { addXP } = useXP();
   const { saveGame } = useGameHistory();
   const { saveWeekly } = useWeeklyChallenge();
+  const { recordFilm } = useCollector();
+  const { markFilmGuessed } = useDecadeTour();
   const { play } = useSound();
+
   const [showConfetti, setShowConfetti] = useState(false);
   const [showGiveUpModal, setShowGiveUpModal] = useState(false);
   const [xpFlash, setXpFlash] = useState(null);
+  const [showBlindInput, setShowBlindInput] = useState(false);
   const savedRef = useRef(false);
 
-  const { movie, status, hintsRevealed, hintOrder, guesses, xpEarned, mode, maxWrongGuesses } = state;
+  const { movie, status, hintsRevealed, hintOrder, guesses, xpEarned, mode, maxWrongGuesses, blindFailed } = state;
 
   useEffect(() => { if (!movie) navigate('/'); }, [movie, navigate]);
 
@@ -47,31 +53,40 @@ export default function GamePage() {
         play('correct');
         setXpFlash(`+${xpEarned} XP`);
         addXP(xpEarned);
+        markFilmGuessed(movie);
+        recordFilm(movie);
         setTimeout(() => setXpFlash(null), 1600);
       } else {
         play('giveUp');
       }
       saveGame({ movie, xpEarned, hintsUsed: hintsRevealed, mode });
-      if (mode === 'weekly') {
-        saveWeekly({ movie, xpEarned, hintsUsed: hintsRevealed });
-      }
+      if (mode === 'weekly') saveWeekly({ movie, xpEarned, hintsUsed: hintsRevealed });
       setTimeout(() => navigate('/results'), status === 'guessed' ? 2200 : 900);
     }
   }, [status]);
 
   if (!movie) return null;
 
-  const isWeekly = mode === 'weekly';
-  const xpTable = isWeekly ? WEEKLY_XP_TABLE : XP_TABLE;
-  const maxXP = xpTable[hintsRevealed] ?? 0;
-  const isDone = status === 'guessed' || status === 'given_up';
+  const isWeekly   = mode === 'weekly';
+  const xpTable    = isWeekly ? WEEKLY_XP_TABLE : XP_TABLE;
+  const maxXP      = xpTable[hintsRevealed] ?? 0;
+  const isDone     = status === 'guessed' || status === 'given_up';
   const wrongGuesses = guesses.filter(g => !g.correct);
   const attemptsLeft = maxWrongGuesses ? maxWrongGuesses - wrongGuesses.length : null;
+  const canBlind   = hintsRevealed === 0 && !blindFailed && !isDone;
 
   function revealHint() {
     if (hintsRevealed >= 7 || isDone) return;
     play('reveal');
     dispatch({ type: 'REVEAL_HINT' });
+  }
+
+  function handleBlindGuess(guess) {
+    play('buttonClick');
+    const norm = s => s.trim().toLowerCase().replace(/[^a-z0-9\s]/g, '');
+    if (norm(guess) !== norm(movie.title)) play('wrong');
+    dispatch({ type: 'BLIND_GUESS', guess });
+    setShowBlindInput(false);
   }
 
   function handleGuess(guess) {
@@ -87,10 +102,8 @@ export default function GamePage() {
 
       {/* Top bar */}
       <div className="w-full max-w-sm mb-5 flex items-center justify-between">
-        <button
-          onClick={() => navigate('/')}
-          className="text-sm text-white/30 hover:text-white/60 transition-colors font-medium"
-        >
+        <button onClick={() => navigate('/')}
+          className="text-sm text-white/30 hover:text-white/60 transition-colors font-medium">
           ✕ Quit
         </button>
         <div className="flex items-center gap-2">
@@ -113,19 +126,74 @@ export default function GamePage() {
             </span>
           )}
           {!isWeekly && (
-            <span className="text-xs text-white/30 font-medium">
-              {hintsRevealed}/7 clues
-            </span>
+            <span className="text-xs text-white/30 font-medium">{hintsRevealed}/7 clues</span>
           )}
           {isWeekly && isDone && (
-            <span className="text-xs text-white/30 font-medium">
-              {hintsRevealed}/7 clues
-            </span>
+            <span className="text-xs text-white/30 font-medium">{hintsRevealed}/7 clues</span>
           )}
         </div>
       </div>
 
       <div className="w-full max-w-sm">
+
+        {/* ── "I Know This!" blind guess ── */}
+        <AnimatePresence>
+          {canBlind && (
+            <motion.div
+              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+              className="mb-4"
+            >
+              {!showBlindInput ? (
+                <motion.button
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                  onClick={() => setShowBlindInput(true)}
+                  className="w-full py-3.5 rounded-2xl font-black text-sm tracking-wide relative overflow-hidden"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(250,204,21,0.15), rgba(234,179,8,0.08))',
+                    border: '1px solid rgba(250,204,21,0.35)',
+                    color: '#fbbf24',
+                    boxShadow: '0 0 24px rgba(250,204,21,0.12)',
+                  }}
+                >
+                  <motion.span
+                    animate={{ opacity: [1, 0.6, 1] }}
+                    transition={{ duration: 1.8, repeat: Infinity }}
+                    className="mr-2"
+                  >⚡</motion.span>
+                  I KNOW THIS! &nbsp;·&nbsp; +{BLIND_XP.toLocaleString()} XP
+                </motion.button>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  className="p-4 rounded-2xl"
+                  style={{ background: 'rgba(250,204,21,0.06)', border: '1px solid rgba(250,204,21,0.25)' }}
+                >
+                  <p className="text-xs font-bold mb-1" style={{ color: '#fbbf24' }}>
+                    ⚡ Blind guess — {BLIND_XP.toLocaleString()} XP if correct, 0 if wrong
+                  </p>
+                  <p className="text-xs text-white/30 mb-3">No clues, no safety net. High risk, high reward.</p>
+                  <GuessInput onGuess={handleBlindGuess} disabled={false} wrongGuesses={[]} />
+                  <button onClick={() => setShowBlindInput(false)}
+                    className="mt-2 w-full text-xs text-white/25 hover:text-white/45 transition-colors py-1">
+                    Cancel — I'll use a clue instead
+                  </button>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Blind failed notice */}
+        {blindFailed && !isDone && (
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="mb-4 px-4 py-2.5 rounded-xl text-xs font-medium text-white/35"
+            style={{ background: 'rgba(239,68,68,0.06)', border: '1px solid rgba(239,68,68,0.12)' }}
+          >
+            ✕ Not quite — reveal clues and try again
+          </motion.div>
+        )}
+
         {/* XP potential */}
         <div className="flex items-center justify-between mb-4 px-1">
           <p className="text-xs font-medium" style={{ color: isWeekly ? 'rgba(168,85,247,0.6)' : 'rgba(255,255,255,0.3)' }}>
@@ -171,8 +239,7 @@ export default function GamePage() {
         {/* Reveal button */}
         {!isDone && hintsRevealed < 7 && (
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
             onClick={revealHint}
             className="w-full py-3.5 mb-4 rounded-2xl font-black text-sm tracking-wide border transition-all"
             style={isWeekly
@@ -198,6 +265,7 @@ export default function GamePage() {
                 style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.18)' }}>
                 <span style={{ color: '#ef4444' }} className="text-xs font-bold">✕</span>
                 <span className="text-sm text-white/45 line-through">{g.value}</span>
+                {g.blind && <span className="text-[10px] font-bold ml-auto" style={{ color: 'rgba(250,204,21,0.4)' }}>blind</span>}
               </motion.div>
             ))}
           </div>
@@ -210,13 +278,13 @@ export default function GamePage() {
           </div>
         )}
 
-        {hintsRevealed === 0 && !isDone && (
+        {hintsRevealed === 0 && !isDone && !canBlind && (
           <p className="text-center text-xs text-white/20 mb-4 font-medium">
             Reveal at least one clue before guessing
           </p>
         )}
 
-        {/* Give up — hidden for weekly when out of attempts (auto give-up handled in reducer) */}
+        {/* Give up */}
         {!isDone && (!isWeekly || attemptsLeft > 0) && (
           <button onClick={() => setShowGiveUpModal(true)}
             className="w-full py-2 text-xs text-white/20 hover:text-white/40 transition-colors font-medium tracking-wide">
@@ -232,7 +300,8 @@ export default function GamePage() {
               style={{ background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.25)' }}>
               <p className="font-black text-xl" style={{ color: '#22c55e' }}>🎉 Correct!</p>
               <p className="text-white/50 text-sm mt-1 font-medium">
-                +{xpEarned} XP · {hintsRevealed} clue{hintsRevealed !== 1 ? 's' : ''} used
+                +{xpEarned} XP
+                {hintsRevealed === 0 ? ' · blind guess ⚡' : ` · ${hintsRevealed} clue${hintsRevealed !== 1 ? 's' : ''} used`}
               </p>
             </motion.div>
           )}

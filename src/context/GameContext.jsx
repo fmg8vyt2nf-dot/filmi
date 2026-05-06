@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from 'react';
 import { movies as allMovies } from '../data/movies';
-import { XP_TABLE, WEEKLY_XP_TABLE, WEEKLY_MAX_WRONG } from '../utils/constants';
+import { XP_TABLE, WEEKLY_XP_TABLE, WEEKLY_MAX_WRONG, BLIND_XP } from '../utils/constants';
 import { getDailyMovie, getTodayKey, getWeeklyMovie, getWeekKey } from '../utils/seededRandom';
 
 const GameContext = createContext(null);
@@ -18,6 +18,7 @@ const initialState = {
   dailyKey: null,
   weekKey: null,
   maxWrongGuesses: null,
+  blindFailed: false,
 };
 
 function shuffle(arr) {
@@ -70,6 +71,15 @@ function reducer(state, action) {
       if (state.hintsRevealed >= 7 || state.status !== 'playing') return state;
       return { ...state, hintsRevealed: state.hintsRevealed + 1 };
 
+    case 'BLIND_GUESS': {
+      const correct = normalize(action.guess) === normalize(state.movie.title);
+      const newGuesses = [...state.guesses, { value: action.guess, correct, blind: true }];
+      if (correct) {
+        return { ...state, status: 'guessed', xpEarned: BLIND_XP, guesses: newGuesses };
+      }
+      return { ...state, blindFailed: true, guesses: newGuesses };
+    }
+
     case 'SUBMIT_GUESS': {
       const guess = action.guess;
       const correct = normalize(guess) === normalize(state.movie.title);
@@ -79,7 +89,6 @@ function reducer(state, action) {
         const xpEarned = table[state.hintsRevealed] ?? 0;
         return { ...state, status: 'guessed', xpEarned, guesses: newGuesses };
       }
-      // Auto give-up when max wrong guesses reached (weekly mode)
       const wrongCount = newGuesses.filter(g => !g.correct).length;
       if (state.maxWrongGuesses && wrongCount >= state.maxWrongGuesses) {
         return { ...state, status: 'given_up', xpEarned: 0, guesses: newGuesses };
