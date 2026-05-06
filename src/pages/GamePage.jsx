@@ -86,7 +86,7 @@ export default function GamePage() {
     const norm = s => s.trim().toLowerCase().replace(/[^a-z0-9\s]/g, '');
     if (norm(guess) !== norm(movie.title)) play('wrong');
     dispatch({ type: 'BLIND_GUESS', guess });
-    setShowBlindInput(false);
+    setBlindStage('idle');
   }
 
   function handleGuess(guess) {
