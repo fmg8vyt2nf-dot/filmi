@@ -137,48 +137,109 @@ export default function GamePage() {
       <div className="w-full max-w-sm">
 
         {/* ── "I Know This!" blind guess ── */}
-        <AnimatePresence>
-          {canBlind && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-              className="mb-4"
+        <AnimatePresence mode="wait">
+          {canBlind && blindStage === 'idle' && (
+            <motion.button
+              key="blind-btn"
+              initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+              onClick={() => setBlindStage('dialogue')}
+              className="w-full py-3.5 mb-4 rounded-2xl font-black text-sm tracking-wide relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(250,204,21,0.15), rgba(234,179,8,0.08))',
+                border: '1px solid rgba(250,204,21,0.35)',
+                color: '#fbbf24',
+                boxShadow: '0 0 24px rgba(250,204,21,0.12)',
+              }}
             >
-              {!showBlindInput ? (
-                <motion.button
-                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                  onClick={() => setShowBlindInput(true)}
-                  className="w-full py-3.5 rounded-2xl font-black text-sm tracking-wide relative overflow-hidden"
-                  style={{
-                    background: 'linear-gradient(135deg, rgba(250,204,21,0.15), rgba(234,179,8,0.08))',
-                    border: '1px solid rgba(250,204,21,0.35)',
-                    color: '#fbbf24',
-                    boxShadow: '0 0 24px rgba(250,204,21,0.12)',
-                  }}
+              <motion.span
+                animate={{ opacity: [1, 0.6, 1] }}
+                transition={{ duration: 1.8, repeat: Infinity }}
+                className="mr-2"
+              >⚡</motion.span>
+              I KNOW THIS! &nbsp;·&nbsp; +{BLIND_XP.toLocaleString()} XP
+            </motion.button>
+          )}
+
+          {canBlind && blindStage === 'dialogue' && (
+            <motion.div
+              key="blind-dialogue"
+              initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-4 rounded-2xl overflow-hidden"
+              style={{ background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(250,204,21,0.2)', boxShadow: '0 0 48px rgba(250,204,21,0.07)' }}
+            >
+              {/* Cinematic top bar */}
+              <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(250,204,21,0.5), transparent)' }} />
+
+              <div className="px-5 py-6">
+                {/* Label */}
+                <p className="text-[10px] font-black tracking-[0.25em] uppercase mb-5" style={{ color: 'rgba(250,204,21,0.4)' }}>
+                  ⚡ A line from this film
+                </p>
+
+                {/* Dialogue */}
+                <motion.blockquote
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15, duration: 0.5 }}
+                  className="text-xl font-black leading-snug tracking-tight mb-1"
+                  style={{ color: '#fef9c3', textShadow: '0 0 32px rgba(250,204,21,0.25)', fontStyle: 'italic' }}
                 >
-                  <motion.span
-                    animate={{ opacity: [1, 0.6, 1] }}
-                    transition={{ duration: 1.8, repeat: Infinity }}
-                    className="mr-2"
-                  >⚡</motion.span>
-                  I KNOW THIS! &nbsp;·&nbsp; +{BLIND_XP.toLocaleString()} XP
-                </motion.button>
-              ) : (
+                  "{movie.dialogue}"
+                </motion.blockquote>
+
+                {/* Separator */}
                 <motion.div
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  className="p-4 rounded-2xl"
-                  style={{ background: 'rgba(250,204,21,0.06)', border: '1px solid rgba(250,204,21,0.25)' }}
-                >
-                  <p className="text-xs font-bold mb-1" style={{ color: '#fbbf24' }}>
-                    ⚡ Blind guess — {BLIND_XP.toLocaleString()} XP if correct, 0 if wrong
-                  </p>
-                  <p className="text-xs text-white/30 mb-3">No clues, no safety net. High risk, high reward.</p>
-                  <GuessInput onGuess={handleBlindGuess} disabled={false} wrongGuesses={[]} />
-                  <button onClick={() => setShowBlindInput(false)}
-                    className="mt-2 w-full text-xs text-white/25 hover:text-white/45 transition-colors py-1">
-                    Cancel — I'll use a clue instead
-                  </button>
-                </motion.div>
-              )}
+                  initial={{ scaleX: 0 }} animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="h-px mt-5 mb-5 origin-left"
+                  style={{ background: 'linear-gradient(90deg, rgba(250,204,21,0.3), transparent)' }}
+                />
+
+                {/* CTA */}
+                <div className="flex gap-2.5">
+                  <motion.button
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.55 }}
+                    whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
+                    onClick={() => setBlindStage('input')}
+                    className="flex-1 py-3 rounded-xl font-black text-sm tracking-wide"
+                    style={{ background: 'linear-gradient(135deg, rgba(250,204,21,0.22), rgba(234,179,8,0.12))', border: '1px solid rgba(250,204,21,0.4)', color: '#fbbf24' }}
+                  >
+                    I still know it →
+                  </motion.button>
+                  <motion.button
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.65 }}
+                    onClick={() => setBlindStage('idle')}
+                    className="px-4 py-3 rounded-xl text-sm font-medium transition-colors"
+                    style={{ border: '1px solid rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.25)' }}
+                  >
+                    Use a clue
+                  </motion.button>
+                </div>
+              </div>
+
+              {/* Cinematic bottom bar */}
+              <div className="h-1.5 w-full" style={{ background: 'linear-gradient(90deg, transparent, rgba(250,204,21,0.5), transparent)' }} />
+            </motion.div>
+          )}
+
+          {canBlind && blindStage === 'input' && (
+            <motion.div
+              key="blind-input"
+              initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              className="mb-4 p-4 rounded-2xl"
+              style={{ background: 'rgba(250,204,21,0.06)', border: '1px solid rgba(250,204,21,0.25)' }}
+            >
+              <p className="text-xs font-bold mb-1" style={{ color: '#fbbf24' }}>
+                ⚡ Blind guess — {BLIND_XP.toLocaleString()} XP if correct, 0 if wrong
+              </p>
+              <p className="text-xs text-white/30 mb-3">No clues, no safety net. High risk, high reward.</p>
+              <GuessInput onGuess={handleBlindGuess} disabled={false} wrongGuesses={[]} />
+              <button onClick={() => setBlindStage('idle')}
+                className="mt-2 w-full text-xs text-white/25 hover:text-white/45 transition-colors py-1">
+                Cancel — I'll use a clue instead
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
