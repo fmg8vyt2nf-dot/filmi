@@ -242,7 +242,7 @@ export default function ResultsPage() {
           {mode === 'practice' && (
             <button onClick={goSetup}
               className="w-full py-3 rounded-xl text-sm font-bold text-white/40 hover:text-white/60 border border-white/8 hover:bg-white/[0.04] transition-all">
-              Change Settings
+              🎞️ Change Difficulty or Era
             </button>
           )}
           <button onClick={goHome}
