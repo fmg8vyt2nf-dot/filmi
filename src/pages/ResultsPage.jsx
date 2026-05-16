@@ -60,7 +60,6 @@ export default function ResultsPage() {
 
   function goSetup() {
     play('buttonClick');
-    dispatch({ type: 'RESET' });
     navigate('/setup');
   }
 
